@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <delete file="src/main/webapp/resources/user/spacerace-servers.zip"/>
+  <zip update="true" excludes="src/main/java/com/codenjoy/dojo/spacerace/client/ai/*,                                                src/test/java/com/codenjoy/dojo/spacerace/client/ai/*" basedir="" includes="src/main/java/com/codenjoy/dojo/spacerace/client/*.java,                                                src/main/java/com/codenjoy/dojo/spacerace/model/Elements.java,                                                src/test/java/com/codenjoy/dojo/spacerace/client/*.java,                                                pom.xml" destfile="src/main/webapp/resources/user/spacerace-servers.zip"/>
+</target>
+</project>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="1.236" errors="0" skipped="0" tests="24" name="com.codenjoy.dojo.spacerace.model.SpaceraceTest">
+  <properties>
+    <property name="idea.version" value="14.1.4"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\java\jdk1.7.0_71\jre\bin"/>
+    <property name="java.vm.version" value="24.71-b01"/>
+    <property name="user.country.format" value="UA"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="idea.launcher.port" value="7545"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="RU"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1, v.178"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="E:\JavaForFun\Codenjoy\CodingDojo\games\spacerace"/>
+    <property name="java.runtime.version" value="1.7.0_71-b14"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\java\jdk1.7.0_71\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\indigo\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA 14.1.4\plugins\maven\lib\maven3\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1251"/>
+    <property name="java.library.path" value="C:\java\jdk1.7.0_71\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Broadcom\Broadcom 802.11 Network Adapter\Driver;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\java\jdk1.7.0_71\bin;C:\java\apache-maven-3.2.5\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\TortoiseGit\bin;C:\java\android-sdk\tools;C:\java\android-sdk\platform-tools;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\7-Zip\;C:\Program Files (x86)\Vagrant\bin;;.;;.;;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="51.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\indigo"/>
+    <property name="user.timezone" value="Europe/Helsinki"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.7"/>
+    <property name="idea.launcher.bin.path" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA 14.1.4\bin"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="indigo"/>
+    <property name="java.class.path" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA 14.1.4\plugins\maven\lib\maven3\boot\plexus-classworlds-2.4.jar;C:\Program Files (x86)\JetBrains\IntelliJ IDEA 14.1.4\lib\idea_rt.jar"/>
+    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\java\jdk1.7.0_71\jre"/>
+    <property name="sun.java.command" value="com.intellij.rt.execution.application.AppMain org.codehaus.classworlds.Launcher -Didea.version=14.1.4 deploy"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="ru"/>
+    <property name="user.language.format" value="uk"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.7.0_71"/>
+    <property name="java.ext.dirs" value="C:\java\jdk1.7.0_71\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\java\jdk1.7.0_71\jre\lib\resources.jar;C:\java\jdk1.7.0_71\jre\lib\rt.jar;C:\java\jdk1.7.0_71\jre\lib\sunrsasign.jar;C:\java\jdk1.7.0_71\jre\lib\jsse.jar;C:\java\jdk1.7.0_71\jre\lib\jce.jar;C:\java\jdk1.7.0_71\jre\lib\charsets.jar;C:\java\jdk1.7.0_71\jre\lib\jfr.jar;C:\java\jdk1.7.0_71\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Program Files (x86)\JetBrains\IntelliJ IDEA 14.1.4\plugins\maven\lib\maven3"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase time="0.01" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldStoneAppearsEvery3seconds"/>
+  <testcase time="0.01" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldHeroRechargeBulletsWhenItEmpty"/>
+  <testcase time="0.007" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldNewBombAndNewStoneAtNewPlace"/>
+  <testcase time="0.011" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombRemovedWhenOutsideBorder"/>
+  <testcase time="0.012" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldNewBombAndNewStoneAtNewPlace2"/>
+  <testcase time="0.011" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombDestroyedByBulletNew"/>
+  <testcase time="0.393" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombDestroyHeroAndResurrectionHero"/>
+  <testcase time="0.264" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombDestroyMeNearRightAndResurrectHero"/>
+  <testcase time="0.111" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldFieldAtStart"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldFieldIcanMove"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldNewStone"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldStoneMove"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldHeroShoot"/>
+  <testcase time="0.012" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldNewBomb"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldRechargeWhenDie"/>
+  <testcase time="0.02" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBulletOutOfTheBoard"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldStoneDestroyedByBullet"/>
+  <testcase time="0.009" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldStoneDestroyedByBullet2"/>
+  <testcase time="0.008" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldNewBombAtRandomPlace"/>
+  <testcase time="0.009" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombDestroyedByBullet"/>
+  <testcase time="0.008" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombDestroyedByBullet2"/>
+  <testcase time="0.327" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldBombDestroyHero"/>
+  <testcase time="0" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldStoneDestroyHero"/>
+  <testcase time="0.006" classname="com.codenjoy.dojo.spacerace.model.SpaceraceTest" name="shouldCountScores"/>
+</testsuite>
