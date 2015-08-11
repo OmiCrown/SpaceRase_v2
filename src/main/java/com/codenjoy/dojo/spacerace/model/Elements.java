@@ -17,6 +17,7 @@ public enum Elements implements CharElements {
     GOLD('$'),       // это то, за чем будет охота
     BOMB('♣'),       // а это бомба, на которой можно подорваться
     STONE('0'),      // а это камень
+    BULLET_CAHRGER('7'), // а это магазин патронов
     BULLET('*');     // а это пуля
 
     final char ch;
