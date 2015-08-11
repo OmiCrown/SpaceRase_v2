@@ -1451,7 +1451,7 @@ public class SpaceraceTest {
         assertE("☼ 70 ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼  0 ☼" +
+                "☼  x ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
         game.tick();
@@ -1460,7 +1460,7 @@ public class SpaceraceTest {
                 "☼  0 ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼  + ☼" +
+                "☼  ☺ ☼" +
                 "☼    ☼");
 
     }
