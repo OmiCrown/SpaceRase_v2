@@ -1293,6 +1293,177 @@ public class SpaceraceTest {
 
     }
 
+    @Ignore
+    @Test
+    public void shouldRechargeWhenDie_Timer_OFF() {
+        //Given
+//        int ticksToRecharge = 1000;
+//        int bulletsCount = 1;
+//        charger = new BulletCharger(ticksToRecharge, bulletsCount);
+
+
+        givenFl("☼   ☼" +
+                "☼   ☼" +
+                "☼☺  ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //When
+//        dice(0, 2, 0);
+//        dice(1, -1);
+//        hero.recharge();
+        game.tick();
+        game.tick();
+        game.tick();
+
+        assertE("☼0  ☼" +
+                "☼7  ☼" +
+                "☼☺  ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+//
+////        //When
+////        hero.act();
+        game.tick();
+        game.tick();
+////
+////
+        //Then
+        assertE("☼   ☼" +
+                "☼7  ☼" +
+                "☼+  ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //When
+//        hero.act();
+        game.tick();
+//        game.tick();
+//
+        //Then
+        assertE("☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+//
+//        //When
+//        hero.act();
+//        game.tick();
+//
+//        //Then
+//        assertE("☼ * ☼" +
+//                "☼ * ☼" +
+//                "☼ * ☼" +
+//                "☼   ☼" +
+//                "☼ ☺ ☼");
+//
+//        //When
+//        hero.act(0);
+//        game.tick();
+//
+//        verify(listener).event(Events.LOOSE);
+//
+//        assertFalse(hero.isAlive());
+//
+//        //Then
+//        assertE("☼ * ☼" +
+//                "☼ * ☼" +
+//                "☼   ☼" +
+//                "☼   ☼" +
+//                "☼ + ☼");
+//
+//        dice(1, 0);
+//        game.newGame(player);
+//        hero = player.getHero();
+//        game.tick();
+//
+//        //Then
+//        assertE("☼ * ☼" +
+//                "☼   ☼" +
+//                "☼   ☼" +
+//                "☼   ☼" +
+//                "☼☺  ☼");
+//
+//        //When
+//        hero.act();
+//        game.tick();
+//
+//        //Then
+//        assertE("☼   ☼" +
+//                "☼   ☼" +
+//                "☼   ☼" +
+//                "☼*  ☼" +
+//                "☼☺  ☼");
+    }
+
+
+    @Test
+    public void shouldBombDestroyHeroAndResurrectionHeroWithRecharge() {
+        // given
+        givenFl("☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+        dice(1, 1, 0, 2);
+        game.tick();
+        game.tick();
+        game.tick();
+        game.tick();
+        // then
+        assertE("☼ 7  ☼" +
+                "☼0 ♣ ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+        game.tick();
+        game.tick();
+        // then
+        assertE("☼ 70 ☼" +
+                "☼    ☼" +
+                "☼ xxx☼" +
+                "☼0xxx☼" +
+                "☼ xxx☼" +
+                "☼    ☼");
+        game.tick();
+        // then
+        assertE("☼ 7  ☼" +
+                "☼  0 ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼0 + ☼" +
+                "☼    ☼");
+        game.tick();
+        // then
+        assertE("☼ 7  ☼" +
+                "☼    ☼" +
+                "☼  0 ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼0   ☼");
+
+        hero.act();
+        game.tick();
+        // then
+        assertE("☼ 70 ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  0 ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+        game.tick();
+        // then
+        assertE("☼ 7  ☼" +
+                "☼  0 ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  + ☼" +
+                "☼    ☼");
+
+    }
     // появление на поле магазина патронов
     // итераторы
     // инструкция
