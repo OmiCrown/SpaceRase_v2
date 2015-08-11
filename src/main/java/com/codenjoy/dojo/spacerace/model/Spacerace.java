@@ -15,10 +15,10 @@ import static com.codenjoy.dojo.services.PointImpl.pt;
 public class Spacerace implements Tickable, Field {
 
     private static final int NEW_APPEAR_PERIOD = 3;
-    private static final int MAX_COUNT_BULLET_CHARGERS = 1;
+    private static final int MAX_COUNT_BULLET_PACKS = 1;
     private final int size;
     private List<Wall> walls;
-    private List<BulletCharger> bulletPacks;
+    private List<BulletPack> bulletPacks;
     private List<Gold> gold;
     private List<Bomb> bombs;
     private List<Bullet> bullets;
@@ -32,7 +32,7 @@ public class Spacerace implements Tickable, Field {
     private int countBomb = 0;
     private int ticksToRecharge;
     private int bulletsCount;
-    private int currentBulletChargers = 0;
+    private int currentBulletPacks = 0;
 
     public Spacerace(Level level, Dice dice, int ticksToRecharge, int bulletsCount) {
         this.dice = dice;
@@ -42,7 +42,7 @@ public class Spacerace implements Tickable, Field {
         gold = level.getGold();
         size = level.getSize();
         players = new LinkedList<Player>();
-        bulletPacks = new LinkedList<BulletCharger>();
+        bulletPacks = new LinkedList<BulletPack>();
         bombs = new LinkedList<Bomb>();
         bullets = new LinkedList<Bullet>();
         stones = new LinkedList<Stone>();
@@ -57,7 +57,7 @@ public class Spacerace implements Tickable, Field {
         explosions.clear();
         createStone();
         createBomb();
-        createBulletCharger();
+        createBulletPack();
         tickHeroes();
         removeHeroDestroyedByBullet();
         tickBullets();
@@ -244,19 +244,19 @@ public class Spacerace implements Tickable, Field {
         }
     }
 
-    private void createBulletCharger() {
-        if(currentBulletChargers < MAX_COUNT_BULLET_CHARGERS) {
+    private void createBulletPack() {
+        if(currentBulletPacks < MAX_COUNT_BULLET_PACKS) {
             int x = dice.next(size - 2);
             int y =  dice.next(size/2 - 1) + size/2 - 1;
             if (x != -1 && y != -1) {
-                    addBulletCharger(x, y);
-                    currentBulletChargers++;
+                    addBulletPack(x, y);
+                    currentBulletPacks++;
                 }
             }
     }
 
-    private void addBulletCharger(int x, int y) {
-        bulletPacks.add(new BulletCharger(ticksToRecharge, bulletsCount, x, y));
+    private void addBulletPack(int x, int y) {
+        bulletPacks.add(new BulletPack(x, y));
     }
 
     private void removeHeroDestroyedByBullet() {
