@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
  */
 public class SpaceraceTest {
 
-    public final static BulletCharger UNLIMITED_CHARGER = new BulletCharger(1000, 1000);
+    public final static BulletCharger UNLIMITED_CHARGER = new BulletCharger(1000, 10);
     private Spacerace game;
     private BulletCharger charger = UNLIMITED_CHARGER;
     private Hero hero;
@@ -153,7 +153,7 @@ public class SpaceraceTest {
 
         //Then
         assertE("☼ 0 ☼" +
-                "☼   ☼" +
+                "☼7  ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼" +
                 "☼   ☼");
@@ -163,7 +163,7 @@ public class SpaceraceTest {
 
         //Then
         assertE("☼  0☼" +
-                "☼ 0 ☼" +
+                "☼70 ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼" +
                 "☼   ☼");
@@ -184,7 +184,7 @@ public class SpaceraceTest {
 
         //Then
         assertE("☼0  ☼" +
-                "☼   ☼" +
+                "☼7  ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼");
@@ -220,7 +220,7 @@ public class SpaceraceTest {
         //Then
         assertE("☼ 0 ☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼0  ☼" +
                 "☼ ☺ ☼");
     }
@@ -242,7 +242,7 @@ public class SpaceraceTest {
 
         //Then
         assertE("☼   ☼" +
-                "☼ * ☼" +
+                "☼7* ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
@@ -372,7 +372,7 @@ public class SpaceraceTest {
     // реинкарнация героя обновляет обойму
     @Ignore // сейчас нет таймера
     @Test
-    public void shouldRechargeWhenDie() {
+    public void shouldRechargeWhenDie_Timer_ON() {
         //Given
         int ticksToRecharge = 50;
         int bulletsCount = 3;
@@ -502,13 +502,14 @@ public class SpaceraceTest {
                 "☼ ☺ ☼");
         //When
         dice(1, 1, 1, -1);
+        hero.recharge();
         hero.act();
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ * ☼" +
                 "☼ ☺ ☼");
 
@@ -516,9 +517,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼   ☼" +
-                "☼7* ☼" +
+                "☼ * ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼");
 
@@ -528,7 +529,7 @@ public class SpaceraceTest {
         //Then
         assertE("☼ 0 ☼" +
                 "☼ * ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼");
 
@@ -538,7 +539,7 @@ public class SpaceraceTest {
         //Then
         assertE("☼ x ☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼");
 
@@ -555,13 +556,14 @@ public class SpaceraceTest {
 
         //When
         dice(1, 1, 1, -1);
+        hero.recharge();
         hero.act();
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼   ☼" +
-                "☼7* ☼" +
+                "☼ * ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
 
@@ -569,9 +571,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼ * ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
 
@@ -581,7 +583,7 @@ public class SpaceraceTest {
         //Then
         assertE("☼ x ☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
 
@@ -589,9 +591,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
 
@@ -617,7 +619,7 @@ public class SpaceraceTest {
         //then
         assertE("☼ ♣ ☼" +
                 "☼   ☼" +
-                "☼7☺ ☼" +
+                "☼ ☺ ☼" +
                 "☼   ☼" +
                 "☼   ☼");
     }
@@ -638,9 +640,9 @@ public class SpaceraceTest {
         game.tick();
 
         //then
-        assertE("☼  ♣☼" +
+        assertE("☼ 7♣☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼☺  ☼");
     }
@@ -662,9 +664,9 @@ public class SpaceraceTest {
         game.tick();
 
         //then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼0 ♣☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
     }
@@ -685,9 +687,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼  ♣☼" +
+        assertE("☼ 7♣☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼☺  ☼");
 
@@ -698,9 +700,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼  ♣☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼☺ ♣☼");
 
@@ -708,9 +710,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼   ☼" +
-                "☼7 ♣☼" +
+                "☼  ♣☼" +
                 "☼   ☼" +
                 "☼☺  ☼");
     }
@@ -726,6 +728,7 @@ public class SpaceraceTest {
 
 
         dice(1, 1, -1, 1);
+        hero.recharge();
         hero.act();
         game.tick();
         game.tick();
@@ -735,7 +738,7 @@ public class SpaceraceTest {
 
         assertE("☼ ♣ ☼" +
                 "☼ * ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼");
 
@@ -743,7 +746,7 @@ public class SpaceraceTest {
 
         assertE("☼xxx☼" +
                 "☼xxx☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼");
     }
@@ -759,6 +762,7 @@ public class SpaceraceTest {
 
 
         dice(1, 1, -1, 1);
+        hero.recharge();
         hero.act();
         game.tick();
         game.tick();
@@ -766,9 +770,9 @@ public class SpaceraceTest {
 
 
 
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼ * ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
 
@@ -776,15 +780,15 @@ public class SpaceraceTest {
 
         assertE("☼xxx☼" +
                 "☼xxx☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
 
         game.tick();
 
-        assertE("☼   ☼" +
+        assertE("☼ 7 ☼" +
                 "☼   ☼" +
-                "☼7  ☼" +
+                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
     }
@@ -806,7 +810,7 @@ public class SpaceraceTest {
         // then
         assertE("☼ 0 ♣☼" +
                 "☼    ☼" +
-                "☼7☺  ☼" +
+                "☼ ☺  ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
@@ -831,9 +835,9 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼0 ♣ ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼  * ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼");
@@ -841,7 +845,7 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼ xxx☼" +
                 "☼0xxx☼" +
                 "☼ xxx☼" +
@@ -861,7 +865,7 @@ public class SpaceraceTest {
                 "☼    ☼");
 
         dice(1, 1, 0, 2);
-
+        hero.recharge();
         game.tick();
         game.tick();
 
@@ -869,9 +873,9 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼0 ♣ ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
@@ -881,9 +885,9 @@ public class SpaceraceTest {
 
 
         // then
-        assertE("☼  0 ☼" +
+        assertE("☼ 70 ☼" +
                 "☼    ☼" +
-                "☼7xxx☼" +
+                "☼ xxx☼" +
                 "☼0xxx☼" +
                 "☼ xxx☼" +
                 "☼    ☼");
@@ -892,9 +896,9 @@ public class SpaceraceTest {
 
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼  0 ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼0 + ☼" +
                 "☼    ☼");
@@ -914,34 +918,34 @@ public class SpaceraceTest {
         game.tick();
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼0 ♣ ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
         game.tick();
         game.tick();
         // then
-        assertE("☼  0 ☼" +
+        assertE("☼ 70 ☼" +
                 "☼    ☼" +
-                "☼7xxx☼" +
+                "☼ xxx☼" +
                 "☼0xxx☼" +
                 "☼ xxx☼" +
                 "☼    ☼");
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼  0 ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼0 + ☼" +
                 "☼    ☼");
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼    ☼" +
-                "☼7 0 ☼" +
+                "☼  0 ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼0   ☼");
@@ -966,9 +970,9 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼0  ♣☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
@@ -977,27 +981,27 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼   0☼" +
+        assertE("☼ 7 0☼" +
                 "☼    ☼" +
-                "☼7 xxx" +
+                "☼  xxx" +
                 "☼0 xxx" +
                 "☼  xxx" +
                 "☼    ☼");
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼   0☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼0 + ☼" +
                 "☼    ☼");
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼    ☼" +
-                "☼7  0☼" +
+                "☼   0☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼0   ☼");
@@ -1017,9 +1021,9 @@ public class SpaceraceTest {
         game.tick();
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼  0 ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
@@ -1027,17 +1031,17 @@ public class SpaceraceTest {
         game.tick();
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼    ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼  0 ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼    ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  + ☼" +
                 "☼    ☼");
@@ -1082,9 +1086,9 @@ public class SpaceraceTest {
         game.tick();
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼    ☼" +
-                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
@@ -1096,53 +1100,52 @@ public class SpaceraceTest {
         // given
         givenFl("☼    ☼" +
                 "☼    ☼" +
+                "☼ ☺  ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼  ☺ ☼" +
                 "☼    ☼");
-        dice(1, 1, -1, -1, 1, 1, 3);
+        dice(1, 1, -1, -1, 0, 0, 3);
         game.tick();
         game.tick();
         game.tick();
         game.tick();
         // then
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
                 "☼    ☼" +
-                "☼7   ☼" +
+                "☼ ☺  ☼" +
                 "☼    ☼" +
-                "☼  ☺ ☼" +
-                "☼    ☼");
-        hero.up();
-        game.tick();
-        assertE("☼    ☼" +
-                "☼    ☼" +
-                "☼7   ☼" +
-                "☼  ☺ ☼" +
                 "☼    ☼" +
                 "☼    ☼");
         hero.up();
         game.tick();
-        assertE("☼    ☼" +
+        assertE("☼ 7  ☼" +
+                "☼ ☺  ☼" +
                 "☼    ☼" +
-                "☼7 ☺ ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.up();
+        game.tick();
+        assertE("☼ ☺  ☼" +
+                "☼7   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
         hero.left();
         game.tick();
-        assertE("☼    ☼" +
+        assertE("☼☺   ☼" +
+                "☼7   ☼" +
                 "☼    ☼" +
-                "☼7☺  ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
-        hero.left();
         game.tick();
 
         // then
-        assertE("☼    ☼" +
+        assertE("☼☺   ☼" +
+                "☼7   ☼" +
                 "☼    ☼" +
-                "☼☺   ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
@@ -1151,17 +1154,17 @@ public class SpaceraceTest {
     public void shouldNewBulletPackAfterHeroGetOldBulletPack() {
         // given
         givenFl("☼    ☼" +
-                "☼    ☼" +
                 "☼ ☺  ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
+                "☼    ☼" +
                 "☼    ☼");
-        dice(1, 1, -1, -1, -1, -1, 2, 3, -1);
+        dice(0, 0, -1, -1, -1, -1, 1, 1, -1);
         game.tick();
         // then
         assertE("☼    ☼" +
-                "☼    ☼" +
                 "☼7☺  ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
@@ -1169,8 +1172,8 @@ public class SpaceraceTest {
         game.tick();
         // then
         assertE("☼    ☼" +
-                "☼    ☼" +
                 "☼☺   ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
@@ -1178,8 +1181,8 @@ public class SpaceraceTest {
         game.tick();
         // then
         assertE("☼ 7  ☼" +
-                "☼    ☼" +
                 "☼ ☺  ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
@@ -1190,38 +1193,104 @@ public class SpaceraceTest {
 
         //Given
         givenFl("☼   ☼" +
-                "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼" +
+                "☼   ☼" +
                 "☼   ☼");
-        dice(1, 1, -1);
-//        hero.left();
+        //when
+        dice(0, 0, -1);
         game.tick();
         //Given
         assertE("☼   ☼" +
-                "☼   ☼" +
                 "☼7☺ ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼");
         hero.left();
         game.tick();
         //Given
         assertE("☼   ☼" +
-                "☼   ☼" +
                 "☼☺  ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼");
       //When
         hero.act();
-
         game.tick();
 
         //Then
-        assertE("☼   ☼" +
-                "☼*  ☼" +
+        assertE("☼*  ☼" +
                 "☼☺  ☼" +
                 "☼   ☼" +
+                "☼   ☼" +
                 "☼   ☼");
+    }
+
+    @Test
+    public void shouldNoBulletsAfteremptyBullets() {
+       //Given
+        givenFl("☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        //when
+        dice(1, 1, -1, -1, -1, -1, 0, 0, -1);
+        game.tick();
+        //Given
+        assertE("☼ 7 ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        hero.up();
+        game.tick();
+        hero.down();
+        game.tick();
+        //Given
+        assertE("☼   ☼" +
+                "☼7☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        //When
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        //Given
+        assertE("☼ * ☼" +
+                "☼7☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        hero.act();
+        game.tick();
+        hero.act();
+        game.tick();
+        //Given
+        assertE("☼   ☼" +
+                "☼7☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
     }
 
     // появление на поле магазина патронов

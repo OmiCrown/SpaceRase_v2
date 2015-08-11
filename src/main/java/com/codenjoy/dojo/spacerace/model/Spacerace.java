@@ -245,9 +245,9 @@ public class Spacerace implements Tickable, Field {
     private void createBulletPack() {
         if(currentBulletPacks < MAX_COUNT_BULLET_PACKS) {
             int x = dice.next(size - 2);
-            int y =  dice.next(size/2 - 1) + size/2 - 1;
+            int y = dice.next(size/3) + size*2/3;
             if (x != -1 && y != -1) {
-                addBulletPack(x, y);
+                addBulletPack(x + 1, y);
                     currentBulletPacks++;
                 }
             }
