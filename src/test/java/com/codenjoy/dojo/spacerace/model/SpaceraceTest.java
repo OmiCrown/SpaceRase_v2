@@ -7,6 +7,7 @@ import com.codenjoy.dojo.services.PrinterFactoryImpl;
 import com.codenjoy.dojo.spacerace.services.Events;
 import com.codenjoy.dojo.utils.TestUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
@@ -234,6 +235,7 @@ public class SpaceraceTest {
                 "☼   ☼");
 
         //When
+        hero.recharge();
         hero.act();
         game.tick();
         game.tick();
@@ -248,6 +250,8 @@ public class SpaceraceTest {
 
     // перезарядка патронов
     // выделить в сеттингс сколько и за соклько тиков
+
+    @Ignore// пока таймера нет
     @Test
     public void shouldHeroRechargeBulletsWhenItEmpty() {
         //Given
@@ -263,6 +267,7 @@ public class SpaceraceTest {
                 "☼ ☺ ☼");
 
         //When
+        hero.recharge();
         hero.act();
         game.tick();
 
@@ -365,6 +370,7 @@ public class SpaceraceTest {
     // я могу удалить своего игрока из поля, он появится в новом месте и перезарядится
     // реинкарнация героя очки онимает (самоубийство)
     // реинкарнация героя обновляет обойму
+    @Ignore // сейчас нет таймера
     @Test
     public void shouldRechargeWhenDie() {
         //Given
@@ -815,7 +821,7 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼");
-
+        hero.recharge();
         dice(1, 1, 0, 2);
 
         game.tick();
@@ -1136,7 +1142,7 @@ public class SpaceraceTest {
         // then
         assertE("☼    ☼" +
                 "☼    ☼" +
-                "☼☺  ☼" +
+                "☼☺   ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
@@ -1150,7 +1156,7 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
-        dice(1, 1, -1, -1, 2, 3, -1);
+        dice(1, 1, -1, -1, -1, -1, 2, 3, -1);
         game.tick();
         // then
         assertE("☼    ☼" +
@@ -1162,7 +1168,7 @@ public class SpaceraceTest {
         hero.left();
         game.tick();
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
                 "☼☺   ☼" +
                 "☼    ☼" +
@@ -1177,6 +1183,45 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
+    }
+
+    @Test
+    public void shouldHeroShootAfterRecharge() {
+
+        //Given
+        givenFl("☼   ☼" +
+                "☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        dice(1, 1, -1);
+//        hero.left();
+        game.tick();
+        //Given
+        assertE("☼   ☼" +
+                "☼   ☼" +
+                "☼7☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        hero.left();
+        game.tick();
+        //Given
+        assertE("☼   ☼" +
+                "☼   ☼" +
+                "☼☺  ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+      //When
+        hero.act();
+
+        game.tick();
+
+        //Then
+        assertE("☼   ☼" +
+                "☼*  ☼" +
+                "☼☺  ☼" +
+                "☼   ☼" +
+                "☼   ☼");
     }
 
     // появление на поле магазина патронов
