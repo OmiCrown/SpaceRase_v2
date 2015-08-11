@@ -15,7 +15,7 @@ import static com.codenjoy.dojo.services.PointImpl.pt;
 public class Spacerace implements Tickable, Field {
 
     private static final int NEW_APPEAR_PERIOD = 3;
-    private static final int MAX_COUNT_BULLET_PACKS = 1;
+    private static final int MAX_COUNT_BULLET_PACKS = 2;
     private final int size;
     private List<Wall> walls;
     private List<BulletPack> bulletPacks;
@@ -68,7 +68,6 @@ public class Spacerace implements Tickable, Field {
         removeBulletOutOfBoard();
         removeBombOutOfBoard();
         checkHeroesAlive();
-
     }
 
     private void checkHeroesAlive() {
@@ -171,16 +170,15 @@ public class Spacerace implements Tickable, Field {
     }
 
     private void tickHeroes() {
+
         for (Player player : players) {
             Hero hero = player.getHero();
             hero.tick();
-//            if (gold.contains(hero)) {
-//                gold.remove(hero);
-//                player.event(Events.WIN);
-//
-//                Point pos = getFreeRandom();
-//                gold.add(new Gold(pos.getX(), pos.getY()));
-//            }
+            if(bulletPacks.contains(hero)){
+                bulletPacks.remove(hero);
+                createBulletPack();
+                player.event(Events.RECHARGE);
+            }
         }
     }
 

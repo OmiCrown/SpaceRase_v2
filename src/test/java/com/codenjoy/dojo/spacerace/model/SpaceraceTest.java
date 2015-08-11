@@ -1085,6 +1085,100 @@ public class SpaceraceTest {
 
     }
 
+    @Test
+    public void shouldHeroPickUpBulletPack() {
+        // given
+        givenFl("☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+        dice(1, 1, -1, -1, 1, 1, 3);
+        game.tick();
+        game.tick();
+        game.tick();
+        game.tick();
+        // then
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼7   ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+        hero.up();
+        game.tick();
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼7   ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.up();
+        game.tick();
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼7 ☺ ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.left();
+        game.tick();
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼7☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.left();
+        game.tick();
+
+        // then
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+    }
+    @Test
+    public void shouldNewBulletPackAfterHeroGetOldBulletPack() {
+        // given
+        givenFl("☼    ☼" +
+                "☼    ☼" +
+                "☼ ☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        dice(1, 1, -1, -1, 2, 3, -1);
+        game.tick();
+        // then
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼7☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.left();
+        game.tick();
+        // then
+        assertE("☼ 7  ☼" +
+                "☼    ☼" +
+                "☼☺   ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.right();
+        game.tick();
+        // then
+        assertE("☼ 7  ☼" +
+                "☼    ☼" +
+                "☼ ☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+    }
+
     // появление на поле магазина патронов
     // итераторы
     // инструкция
