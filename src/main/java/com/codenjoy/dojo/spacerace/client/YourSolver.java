@@ -4,6 +4,7 @@ import com.codenjoy.dojo.client.Direction;
 import com.codenjoy.dojo.client.Solver;
 import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.RandomDice;
 
 /**
@@ -14,7 +15,7 @@ import com.codenjoy.dojo.services.RandomDice;
  */
 public class YourSolver implements Solver<Board> {
 
-    private static final String USER_NAME = "user@gmail.com";
+    private static final String USER_NAME = "kudriavtsev.oleksii@gmail.com";
 
     private Dice dice;
     private Board board;
@@ -27,8 +28,20 @@ public class YourSolver implements Solver<Board> {
     public String get(Board board) {
         this.board = board;
         if (board.isGameOver()) return "";
+        String result = Direction.UP.toString();
+        result = findTheDirestion(board);
 
-        return Direction.UP.toString();
+
+
+        return result;
+    }
+
+    private String findTheDirestion(Board board) {
+        Point me = board.getMe();
+        if (me != null) {
+            System.out.println(me.getX() + " " + me.getY());
+        }
+        return "";
     }
 
     public static void main(String[] args) {
