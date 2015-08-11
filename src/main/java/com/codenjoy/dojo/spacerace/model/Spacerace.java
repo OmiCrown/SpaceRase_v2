@@ -128,6 +128,7 @@ public class Spacerace implements Tickable, Field {
             bullets.remove(point);
             getPlayerFor(((Bullet)point).getOwner()).event(Events.DESTROY_ENEMY);
         }
+        player.event(Events.LOOSE);
         player.getHero().die();
     }
 
