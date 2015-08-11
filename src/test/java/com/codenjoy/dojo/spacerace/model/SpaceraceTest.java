@@ -1399,7 +1399,7 @@ public class SpaceraceTest {
 
 
     @Test
-    public void shouldBombDestroyHeroAndResurrectionHeroWithRecharge() {
+    public void shouldBombDestroyHeroAndResurrectionHeroWithoutRecharge() {
         // given
         givenFl("☼    ☼" +
                 "☼    ☼" +
@@ -1451,7 +1451,7 @@ public class SpaceraceTest {
         assertE("☼ 70 ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼  x ☼" +
+                "☼  0 ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
         game.tick();
@@ -1460,7 +1460,7 @@ public class SpaceraceTest {
                 "☼  0 ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼  ☺ ☼" +
+                "☼  x ☼" +
                 "☼    ☼");
 
     }
