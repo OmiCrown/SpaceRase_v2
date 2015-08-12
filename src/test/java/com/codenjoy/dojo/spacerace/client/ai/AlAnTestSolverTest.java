@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.codenjoy.dojo.client.Direction;
@@ -182,6 +183,133 @@ public class AlAnTestSolverTest {
 
 
     }
+
+    @Test
+    public void shouldRightWhenUpAndBombIsUp() {
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ☺  ☼"
+                , Direction.RIGHT);
+
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼   ☺ ☼"
+                , Direction.RIGHT);
+
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼    ☺☼"
+                , Direction.UP);
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣ ☺☼" +
+                "☼     ☼"
+                , Direction.UP);
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼    ☺☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼"
+                , Direction.UP);
+
+    }
+
+    @Ignore  // todo очень временно (доделать полсчет дистанций)
+    @Test
+    public void shouldLefttWhenUpAndBombIsUp2() {
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ☺  ☼"
+                , Direction.LEFT);
+
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼ ☺   ☼"
+                , Direction.LEFT);
+
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼☺    ☼"
+                , Direction.UP);
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☺ ♣  ☼" +
+                "☼     ☼"
+                , Direction.UP);
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☺    ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼"
+                , Direction.UP);
+
+    }
+
+    @Test
+    public void shouldLefttWhenRightAndBombIsUp3() {
+        assertA("☼    7☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼   ♣ ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ☺  ☼"
+                , Direction.LEFT);
+
+        assertA("☼    7☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼   ♣ ☼" +
+                "☼     ☼" +
+                "☼ ☺   ☼"
+                , Direction.UP);
+
+        assertA("☼    7☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼ ☺ ♣ ☼" +
+                "☼     ☼"
+                , Direction.UP);
+
+    }
+
 
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));
