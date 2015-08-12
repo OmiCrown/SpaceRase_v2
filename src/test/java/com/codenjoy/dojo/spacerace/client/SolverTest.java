@@ -72,6 +72,16 @@ public class SolverTest {
                  , Direction.DOWN);
     }
 
+    @Test
+    public void shouldStopWhenStoneIsLeftUp() {
+        assertAI("☼ 0 ☼" +
+                 "☼7 ☺☼" +
+                 "☼   ☼" +
+                 "☼   ☼" +
+                 "☼   ☼"
+                 , Direction.STOP);
+    }
+
     private void assertAI(String board, Direction expected) {
         String actual = ai.get(board(board));
         assertEquals(expected.toString(), actual);
