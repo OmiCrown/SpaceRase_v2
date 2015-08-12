@@ -44,16 +44,32 @@ public class AlAnTestSolver implements Solver<Board> {
 		this.board = board;
 		if (board.isGameOver())
 			return "";
-		String result = "";
+		Direction result = Direction.STOP;
 		result = findDirection(board);
 		if (result != null) {
-			return result;
+			if(isStoneOrBombAtop()){
+                return result.ACT.toString();
+            }
+            return result.toString();
 		}
 		return Direction.STOP.toString();
 
 	}
 
-	private String findDirection(Board board) {
+    private boolean isStoneOrBombAtop() { //todo asup!! в цикле проверка по у на наличие
+//        int y = board.getMe().getY();
+//        Point toCheck = new PointImpl(board.getMe());
+//        for (int i = y - 1; i < 0; i--) {
+//            if(){
+//
+//            }
+//
+//        }
+
+        return false;
+    }
+
+    private Direction findDirection(Board board) {
 		Direction result = Direction.STOP;
 
 		Point me = board.getMe();
@@ -106,7 +122,7 @@ public class AlAnTestSolver implements Solver<Board> {
 		return result;
 	}
 
-	private String CheckResult(Direction result, Board board) {
+	private Direction CheckResult(Direction result, Board board) {
 		Direction checkedResultStone = result;
 		Direction checkedResultBomb = result;
         Direction checkedDirection = Direction.STOP;
@@ -122,10 +138,9 @@ public class AlAnTestSolver implements Solver<Board> {
             }else {
                 checkedDirection = checkedResultBomb;
             }
-
 		}
 
-		return checkedDirection.toString();
+		return checkedDirection;
 	}
 
     private Direction findBestDirectionNearBomb(Board board, Point me, Direction givenDirection) {
