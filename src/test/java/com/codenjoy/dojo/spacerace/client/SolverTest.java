@@ -28,27 +28,51 @@ public class SolverTest {
     }
 
     private Board board(String board) {
+
         return (Board) new Board().forString(board);
     }
 
     @Test
-    public void should() {
-        asertAI("☼0  ☼" +
-                "☼ 0 ☼" +
-                "☼   ☼" +
-                "☼☺ ☻☼" +
-                "☼ ☻ ☼"
-                , Direction.UP);
-
-        asertAI("☼   ☼" +
-                "☼0  ☼" +
-                "☼ 0 ☼" +
-                "☼☺*☻☼" +
-                "☼ ☻ ☼"
-                , Direction.UP);
+    public void shouldUP() {
+        assertAI("☼   ☼" +
+                 "☼ 7 ☼" +
+                 "☼   ☼" +
+                 "☼ ☺ ☼" +
+                 "☼   ☼"
+                 , Direction.UP);
     }
 
-    private void asertAI(String board, Direction expected) {
+    @Test
+    public void shouldRight() {
+        assertAI("☼   ☼" +
+                 "☼☺ 7☼" +
+                 "☼   ☼" +
+                 "☼   ☼" +
+                 "☼   ☼"
+                 , Direction.RIGHT);
+    }
+
+    @Test
+    public void shouldLeft() {
+        assertAI("☼   ☼" +
+                 "☼7 ☺☼" +
+                 "☼   ☼" +
+                 "☼   ☼" +
+                 "☼   ☼"
+                 , Direction.LEFT);
+    }
+
+    @Test
+    public void shouldDown() {
+        assertAI("☼   ☼" +
+                 "☼  ☺☼" +
+                 "☼   ☼" +
+                 "☼  7☼" +
+                 "☼   ☼"
+                 , Direction.DOWN);
+    }
+
+    private void assertAI(String board, Direction expected) {
         String actual = ai.get(board(board));
         assertEquals(expected.toString(), actual);
     }
