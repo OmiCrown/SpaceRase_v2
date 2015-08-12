@@ -1397,7 +1397,7 @@ public class SpaceraceTest {
 //                "☼☺  ☼");
     }
 
-
+    @Ignore
     @Test
     public void shouldBombDestroyHeroAndResurrectionHeroWithoutRecharge() {
         // given
@@ -1460,10 +1460,10 @@ public class SpaceraceTest {
                 "☼  0 ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
-                "☼  x ☼" +
+                "☼  + ☼" +
                 "☼    ☼");
-
     }
+
     // появление на поле магазина патронов
     // итераторы
     // инструкция
