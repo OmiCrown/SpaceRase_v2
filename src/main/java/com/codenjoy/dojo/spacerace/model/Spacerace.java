@@ -243,7 +243,7 @@ public class Spacerace implements Tickable, Field {
         }
     }
 
-    private void createBulletPack() {
+    private void createBulletPack() {//TODO Паки создаюься по одному за тик, можно в цикле создать все сразу
         if(currentBulletPacks < MAX_COUNT_BULLET_PACKS) {
             int x = dice.next(size - 2);
             int y = dice.next(size/3) + size*2/3;
