@@ -34,55 +34,69 @@ public class SolverTest {
 
     @Test
     public void shouldUP() {
-        assertAI("☼   ☼" +
-                 "☼ 7 ☼" +
-                 "☼   ☼" +
-                 "☼ ☺ ☼" +
-                 "☼   ☼"
-                 , Direction.UP);
+        assertA("☼   ☼" +
+                "☼ 7 ☼" +
+                "☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼"
+                , Direction.UP);
     }
 
     @Test
     public void shouldRight() {
-        assertAI("☼   ☼" +
-                 "☼☺ 7☼" +
-                 "☼   ☼" +
-                 "☼   ☼" +
-                 "☼   ☼"
-                 , Direction.RIGHT);
+        assertA("☼   ☼" +
+                "☼☺ 7☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.RIGHT);
     }
 
     @Test
     public void shouldLeft() {
-        assertAI("☼   ☼" +
-                 "☼7 ☺☼" +
-                 "☼   ☼" +
-                 "☼   ☼" +
-                 "☼   ☼"
-                 , Direction.LEFT);
+        assertA("☼   ☼" +
+                "☼7 ☺☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.LEFT);
     }
 
     @Test
     public void shouldDown() {
-        assertAI("☼   ☼" +
-                 "☼  ☺☼" +
-                 "☼   ☼" +
-                 "☼  7☼" +
-                 "☼   ☼"
-                 , Direction.DOWN);
+        assertA("☼   ☼" +
+                "☼  ☺☼" +
+                "☼   ☼" +
+                "☼  7☼" +
+                "☼   ☼"
+                , Direction.DOWN);
     }
 
     @Test
     public void shouldStopWhenStoneIsLeftUp() {
-        assertAI("☼ 0 ☼" +
-                 "☼7 ☺☼" +
-                 "☼   ☼" +
-                 "☼   ☼" +
-                 "☼   ☼"
-                 , Direction.STOP);
+        assertA("☼ 0 ☼" +
+                "☼7 ☺☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.STOP);
+
+        assertA("☼   ☼" +
+                "☼70☺☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.LEFT);
+        
+        assertA("☼   ☼" +
+                "☼7☺ ☼" +
+                "☼ 0 ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.LEFT);
     }
 
-    private void assertAI(String board, Direction expected) {
+    private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));
         assertEquals(expected.toString(), actual);
     }
