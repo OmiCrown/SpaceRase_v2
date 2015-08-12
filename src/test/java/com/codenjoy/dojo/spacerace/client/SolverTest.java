@@ -95,7 +95,23 @@ public class SolverTest {
                 "☼   ☼"
                 , Direction.LEFT);
     }
+    @Test
+    public void shouldStopWhenStoneIsRightUp() {
+        assertA("☼ 0 ☼" +
+                "☼☺ 7☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.STOP);
 
+        assertA("☼   ☼" +
+                "☼☺07☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼"
+                , Direction.RIGHT);
+
+    }
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));
         assertEquals(expected.toString(), actual);
