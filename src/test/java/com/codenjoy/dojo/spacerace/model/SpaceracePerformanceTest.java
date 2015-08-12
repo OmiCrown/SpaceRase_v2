@@ -24,7 +24,7 @@ public class SpaceracePerformanceTest {
         List<com.codenjoy.dojo.services.Game> games = new LinkedList<com.codenjoy.dojo.services.Game>();
 
         PrinterFactory factory = new PrinterFactoryImpl();
-        for (int index = 0; index < 50; index++) {
+        for (int index = 0; index < 118; index++) {
             com.codenjoy.dojo.services.Game game = sampleGame.newGame(mock(EventListener.class), factory);
             games.add(game);
         }
