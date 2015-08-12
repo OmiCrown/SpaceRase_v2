@@ -95,6 +95,7 @@ public class SolverTest {
                 "☼   ☼"
                 , Direction.LEFT);
     }
+
     @Test
     public void shouldStopWhenStoneIsRightUp() {
         assertA("☼ 0 ☼" +
@@ -112,6 +113,73 @@ public class SolverTest {
                 , Direction.RIGHT);
 
     }
+
+    @Test
+    public void shouldLeftWhenStoneIsUp() {
+        assertA("☼ 7 ☼" +
+                "☼   ☼" +
+                "☼ 0 ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼"
+                , Direction.LEFT);
+
+        assertA("☼   ☼" +
+                "☼ 7 ☼" +
+                "☼   ☼" +
+                "☼☺0 ☼" +
+                "☼   ☼"
+                , Direction.UP);
+    }
+
+    @Test
+    public void shouldLeftWhenStoneIsUp2() {
+        assertA("☼ 7 ☼" +
+                "☼ 0 ☼" +
+                "☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼"
+                , Direction.LEFT);
+
+        assertA("☼ 7 ☼" +
+                "☼   ☼" +
+                "☼ 0 ☼" +
+                "☼☺  ☼" +
+                "☼   ☼"
+                , Direction.UP);
+    }
+
+    @Test
+    public void shouldRightWhenRightAndBombIsUp() {
+        assertA("☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼    7☼" +
+                "☼  ☺  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼"
+                , Direction.RIGHT);
+
+        assertA("☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼    7☼" +
+                "☼   ☺ ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼"
+                , Direction.RIGHT);
+
+        assertA("☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣ 7☼" +
+                "☼    ☺☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼"
+                , Direction.UP);
+
+
+    }
+
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));
         assertEquals(expected.toString(), actual);

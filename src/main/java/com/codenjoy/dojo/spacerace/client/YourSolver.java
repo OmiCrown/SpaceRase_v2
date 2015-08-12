@@ -43,9 +43,12 @@ public class YourSolver implements Solver<Board> {
 
     private String findDirection(Board board) {
         Direction result = Direction.STOP;
+        Point me = new PointImpl(0,0);
 
-        Point me = board.getMe();
-        if (me != null) {
+        try {me = board.getMe(); }
+        catch(Throwable t){        }
+
+        if ((me != null) && (me.getX() != 0)) {
             int x = me.getX();
             int y = me.getY();
             result = findDirectionToBulletPack(board, me, result);
@@ -95,15 +98,64 @@ public class YourSolver implements Solver<Board> {
     }
 
     private String CheckResult(Direction result, Board board) {
-        String checkedResult = result.toString();
+        String checkedResultStone = result.toString();
+        String checkedResultBomb = result.toString();
         Point me = board.getMe();
         if (me != null) {
             int x = me.getX();
             int y = me.getY();
 
-            checkedResult = findBestDirectionNearStone(board, me, result).toString();
+            checkedResultStone = findBestDirectionNearStone(board, me, result).toString();
+            checkedResultBomb = findBestDirectionNearBomb(board, me, result).toString();
+
+            if (result.equals(checkedResultStone)) {
+                if(checkedResultStone.equals(checkedResultBomb)){
+                    return result.toString();
+                }else {
+                    return checkedResultBomb;
+                }
+
+            }
+// else {
+//                if(checkedResultStone.equals(checkedResultBomb)){
+//                    return checkedResultStone;
+//                }else {
+//                    return checkedResultBomb;
+//                }
+//            }
         }
-        return checkedResult;
+        return checkedResultStone;
+    }
+
+    private Direction findBestDirectionNearBomb(Board board, Point me, Direction givenDirection) {
+        Direction bestDirection = givenDirection;
+
+        if ((board.isBombAt(me.getX(), me.getY() - 2)) & // TODO implement directions
+                (bestDirection.equals(Direction.RIGHT))){
+            return Direction.RIGHT;
+        }
+
+        if ((board.isBombAt(me.getX() + 1, me.getY() - 3)) & // TODO implement directions
+                (bestDirection.equals(Direction.RIGHT))){
+            return Direction.LEFT;
+        }
+
+        if ((board.isBombAt(me.getX() + 2, me.getY() - 2)) & // TODO implement directions
+                (bestDirection.equals(Direction.RIGHT))){
+            return Direction.STOP;
+        }
+
+        if ((board.isBombAt(me.getX() + 1, me.getY() - 1)) & // TODO implement directions
+                (bestDirection.equals(Direction.RIGHT))){
+            return Direction.STOP;
+        }
+
+        if ((board.isBombAt(me.getX() + 1, me.getY() + 1)) & // TODO implement directions
+                (bestDirection.equals(Direction.RIGHT))){
+            return Direction.RIGHT;
+        }
+
+        return bestDirection;
     }
 
     private Direction findBestDirectionNearStone(Board board, Point me, Direction givenDirection) {
@@ -117,8 +169,8 @@ public class YourSolver implements Solver<Board> {
             return Direction.STOP;
         }
 
-        if ((board.isStoneAt(me.getX(), me.getY() - 1)) & (bestDirection.equals(Direction.UP))){
-
+        if (((board.isStoneAt(me.getX(), me.getY() - 1)) ||
+                (board.isStoneAt(me.getX(), me.getY() - 2))) & (bestDirection.equals(Direction.UP))){
 //            if ((findBestDirectionNearStone(board, me, Direction.LEFT)).equals(bestDirection)){
             return Direction.LEFT;
 //            }else {
