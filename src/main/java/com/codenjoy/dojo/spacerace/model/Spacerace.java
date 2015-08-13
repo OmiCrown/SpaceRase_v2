@@ -238,8 +238,8 @@ public class Spacerace implements Tickable, Field {
             int x = dice.next(size - 2);
             if (x != -1) {
                 addStone(x + 1);
-                countStone = 0;
             }
+            countStone = 0;
         }
     }
 
