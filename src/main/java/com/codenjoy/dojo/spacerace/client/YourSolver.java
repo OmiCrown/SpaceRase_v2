@@ -158,7 +158,7 @@ public class YourSolver implements Solver<Board> {
         int y = me.getY();
 
         if ((board.isBombAt(x, y - 4)) & (bestDirection.equals(Direction.UP))){
-            // TODO implement directions
+            // TODO implement directions asap
             // посчитать дистанции вправо и влево, где меньше, то туда
             return Direction.RIGHT;
         }
