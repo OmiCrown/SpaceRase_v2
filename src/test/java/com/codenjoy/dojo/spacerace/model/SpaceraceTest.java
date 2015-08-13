@@ -1134,9 +1134,11 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
+
         dice(-1, -1, 1, 1);
         game.tick();
         game.tick();
+
         // then
         assertE("☼ 7  ☼" +
                 "☼    ☼" +
