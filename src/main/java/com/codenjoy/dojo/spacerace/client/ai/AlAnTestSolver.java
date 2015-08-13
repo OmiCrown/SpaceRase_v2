@@ -48,24 +48,37 @@ public class AlAnTestSolver implements Solver<Board> {
 		result = findDirection(board);
 		if (result != null) {
 			if(isStoneOrBombAtop()){
-                return result.ACT.toString();
+                if(isBulletAtop()){
+                    return result.toString();
+                }
+                return result + Direction.ACT.toString();
             }
             return result.toString();
 		}
 		return Direction.STOP.toString();
-
 	}
 
-    private boolean isStoneOrBombAtop() { //todo asup!! в цикле проверка по у на наличие
-//        int y = board.getMe().getY();
-//        Point toCheck = new PointImpl(board.getMe());
-//        for (int i = y - 1; i < 0; i--) {
-//            if(){
-//
-//            }
-//
-//        }
+    private boolean isBulletAtop() {
+        int y = board.getMe().getY();
+        int x = board.getMe().getX();
 
+        for (int i = y - 1; i >= 0; i--) {
+            if(board.isBulletAt(x,i)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isStoneOrBombAtop() {
+        int y = board.getMe().getY();
+        int x = board.getMe().getX();
+
+        for (int i = y - 1; i >= 0; i--) {
+            if(board.isStoneAt(x,i) || board.isBombAt(x, i)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -139,7 +152,6 @@ public class AlAnTestSolver implements Solver<Board> {
                 checkedDirection = checkedResultBomb;
             }
 		}
-
 		return checkedDirection;
 	}
 
@@ -238,7 +250,6 @@ public class AlAnTestSolver implements Solver<Board> {
             return Direction.LEFT;
         }
 
-
         return bestDirection;
     }
 
@@ -258,18 +269,8 @@ public class AlAnTestSolver implements Solver<Board> {
         if (((board.isStoneAt(me.getX(), me.getY() - 1)) ||
                 (board.isStoneAt(me.getX(), me.getY() - 2))) &
                 (bestDirection.equals(Direction.UP))){
-
-//            if ((findBestDirectionNearStone(board, me, Direction.LEFT)).equals(bestDirection)){
                 return Direction.LEFT;
-//            }else {
-//                return Direction.RIGHT;
-//            }
-
-//            return bestDirection;
         }
-
-
         return bestDirection;
     }
-
 }
