@@ -685,7 +685,6 @@ public class SpaceraceTest {
                 "☼  ☺☼");
     }
 
-// не понятно, почему перед первым тиком уже появился магазин
     @Test
     public void shouldNewBombAndNewStoneAtNewPlace() {
         //given
@@ -696,14 +695,14 @@ public class SpaceraceTest {
                 "☼   ☼");
 
         //when
-        dice(1, 1, 0, 2);
+        diceNew(0, 2);
         game.tick();
         game.tick();
         game.tick();
         game.tick();
 
         //then
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼0 ♣☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼" +
