@@ -754,6 +754,7 @@ public class SpaceraceTest {
                 "☼   ☼" +
                 "☼☺  ☼");
     }
+
     @Test
     public void shouldBombDestroyedByBullet() {
         // given
@@ -765,7 +766,7 @@ public class SpaceraceTest {
                 "☼ ☺ ☼");
 
 
-        dice(1, 1, -1, 1);
+        diceNew(-1, 1);
         hero.recharge();
         hero.act();
         game.tick();
@@ -788,6 +789,7 @@ public class SpaceraceTest {
                 "☼   ☼" +
                 "☼ ☺ ☼");
     }
+
     @Test
     public void shouldBombDestroyedByBullet2() {
         // given
@@ -799,7 +801,7 @@ public class SpaceraceTest {
                 "☼   ☼");
 
 
-        dice(1, 1, -1, 1);
+        diceNew(-1, 1);
         hero.recharge();
         hero.act();
         game.tick();
@@ -808,7 +810,7 @@ public class SpaceraceTest {
 
 
 
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼ * ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼" +
@@ -824,12 +826,13 @@ public class SpaceraceTest {
 
         game.tick();
 
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼");
     }
+
     @Test
     public void shouldNewBombAndNewStoneAtNewPlace2() {
         // given
@@ -840,7 +843,7 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼");
 
-        dice(1, 1, 1, 3);
+        diceNew(1, 3);
         game.tick();
         game.tick();
         game.tick();
@@ -863,9 +866,9 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼");
-        hero.recharge();
-        dice(1, 1, 0, 2);
 
+        diceNew(0, 2);
+        hero.recharge();
         game.tick();
         game.tick();
         hero.act();
@@ -873,7 +876,7 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼0 ♣ ☼" +
                 "☼    ☼" +
                 "☼  * ☼" +
@@ -883,7 +886,7 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼ xxx☼" +
                 "☼0xxx☼" +
                 "☼ xxx☼" +
@@ -902,16 +905,14 @@ public class SpaceraceTest {
                 "☼  ☺ ☼" +
                 "☼    ☼");
 
-        dice(1, 1, 0, 2);
-        hero.recharge();
+        diceNew(0, 2);
         game.tick();
         game.tick();
-
         game.tick();
         game.tick();
 
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼0 ♣ ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
@@ -921,9 +922,8 @@ public class SpaceraceTest {
         game.tick();
         game.tick();
 
-
         // then
-        assertE("☼ 70 ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
                 "☼ xxx☼" +
                 "☼0xxx☼" +
@@ -932,15 +932,15 @@ public class SpaceraceTest {
 
         game.tick();
 
-
         // then
-        assertE("☼ 7  ☼" +
-                "☼  0 ☼" +
+        assertE("☼    ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼0 + ☼" +
                 "☼    ☼");
     }
+
     @Test
     public void shouldBombDestroyHeroAndResurrectionHero() {
         // given
@@ -950,47 +950,55 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
-        dice(1, 1, 0, 2);
+
+        diceNew(0, 2);
         game.tick();
         game.tick();
         game.tick();
         game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼0 ♣ ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
+
         game.tick();
         game.tick();
+
         // then
-        assertE("☼ 70 ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
                 "☼ xxx☼" +
                 "☼0xxx☼" +
                 "☼ xxx☼" +
                 "☼    ☼");
+
         game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
-                "☼  0 ☼" +
+        assertE("☼    ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼0 + ☼" +
                 "☼    ☼");
+
         game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
-                "☼  0 ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼0   ☼");
     }
 
     @Test
-    public void shouldBombDestroyMeNearRightAndResurrectHero() {
+    public void shouldBombDestroyHeroRightAndResurrectHero() {
         // given
         givenFl("☼    ☼" +
                 "☼    ☼" +
@@ -999,16 +1007,15 @@ public class SpaceraceTest {
                 "☼  ☺ ☼" +
                 "☼    ☼");
 
-        dice(1, 1, 0, 3);
+        diceNew(0, 3);
 
         game.tick();
         game.tick();
-
         game.tick();
         game.tick();
 
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼0  ♣☼" +
                 "☼    ☼" +
                 "☼    ☼" +
@@ -1019,17 +1026,18 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼ 7 0☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
                 "☼  xxx" +
                 "☼0 xxx" +
                 "☼  xxx" +
                 "☼    ☼");
+
         game.tick();
 
         // then
-        assertE("☼ 7  ☼" +
-                "☼   0☼" +
+        assertE("☼    ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼0 + ☼" +
@@ -1037,13 +1045,14 @@ public class SpaceraceTest {
         game.tick();
 
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
-                "☼   0☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼0   ☼");
     }
+
     @Test
     public void shouldStoneDestroyHero() {
         // given
@@ -1053,13 +1062,15 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
-        dice(1, 1, 2, -1);
+
+        diceNew(2);
         game.tick();
         game.tick();
         game.tick();
         game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼  0 ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
@@ -1068,16 +1079,19 @@ public class SpaceraceTest {
 
         game.tick();
         game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼  0 ☼" +
                 "☼  ☺ ☼" +
                 "☼    ☼");
+
         game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
+        assertE("☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
