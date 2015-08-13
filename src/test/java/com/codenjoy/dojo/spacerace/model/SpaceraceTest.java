@@ -719,13 +719,13 @@ public class SpaceraceTest {
                 "☼☺  ☼");
 
         //When
-        dice(1, 1, -1, 2, 2, 2);
+        diceNew(-1, 2);
         game.tick();
         game.tick();
         game.tick();
 
         //Then
-        assertE("☼ 7♣☼" +
+        assertE("☼  ♣☼" +
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
@@ -738,8 +738,8 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼ 7 ☼" +
-                "☼  ♣☼" +
+        assertE("☼   ☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼☺ ♣☼");
@@ -748,9 +748,9 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼   ☼" +
-                "☼  ♣☼" +
+                "☼   ☼" +
                 "☼   ☼" +
                 "☼☺  ☼");
     }
