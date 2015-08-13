@@ -23,6 +23,7 @@ public class YourSolver implements Solver<Board> {
 
     private Dice dice;
     private Board board;
+    private int bullets = 0;
 
     public YourSolver(Dice dice) {
         this.dice = dice;
@@ -36,10 +37,11 @@ public class YourSolver implements Solver<Board> {
         Direction result = Direction.STOP;
         result = findDirection(board);
         if (result != null) {
-            if(isStoneOrBombAtop()){
+            if(isStoneOrBombAtop() & bullets > 0){
                 if(isBulletAtop()){
                     return result.toString();
                 }
+                bullets--;
                 return result + Direction.ACT.toString();
             }
             return result.toString();
@@ -90,8 +92,8 @@ public class YourSolver implements Solver<Board> {
                 Point newMe;
                 double newDistance = (double) Integer.MAX_VALUE;
                 double distance;
-                newMe = new PointImpl(me.getX() + 1, me.getY());
 
+                newMe = new PointImpl(me.getX() + 1, me.getY());
                 distance = newMe.distance(box);
                 if (distance < newDistance) {
                     newDistance = distance;
@@ -117,6 +119,10 @@ public class YourSolver implements Solver<Board> {
                 if (distance < newDistance) {
                     newDistance = distance;
                     result = Direction.UP;
+                }
+
+                if(newDistance < 1){
+                    bullets = 10;
                 }
             }
         }
