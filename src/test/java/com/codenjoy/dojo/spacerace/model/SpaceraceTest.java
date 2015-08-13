@@ -1135,7 +1135,7 @@ public class SpaceraceTest {
                 "☼  ☺ ☼" +
                 "☼    ☼");
 
-        dice(-1, -1, 1, 1);
+        diceNew(-1, -1, 1, 1);
         game.tick();
         game.tick();
 
@@ -1158,52 +1158,42 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
-        dice(1, 1, -1, -1, 0, 0, 3);
+
+        diceNew(-1, -1, 1, 1);
         game.tick();
         game.tick();
         game.tick();
-        game.tick();
-        // then
-        assertE("☼ 7  ☼" +
-                "☼    ☼" +
-                "☼ ☺  ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼");
-        hero.up();
-        game.tick();
-        assertE("☼ 7  ☼" +
-                "☼ ☺  ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼");
-        hero.up();
-        game.tick();
-        assertE("☼ ☺  ☼" +
-                "☼7   ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼");
-        hero.left();
-        game.tick();
-        assertE("☼☺   ☼" +
-                "☼7   ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼" +
-                "☼    ☼");
         game.tick();
 
         // then
-        assertE("☼☺   ☼" +
-                "☼7   ☼" +
+        assertE("☼ 7  ☼" +
+                "☼    ☼" +
+                "☼ ☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+
+        hero.up();
+        game.tick();
+
+        assertE("☼ 7  ☼" +
+                "☼ ☺  ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+
+        hero.up();
+        game.tick();
+
+        assertE("☼ ☺  ☼" +
+                "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
     }
+
     @Test
     public void shouldNewBulletPackAfterHeroGetOldBulletPack() {
         // given
@@ -1213,29 +1203,37 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
-        dice(0, 0, -1, -1, -1, -1, 1, 1, -1);
+
+        diceNew(-1, -1, 0, 1);
         game.tick();
+
         // then
-        assertE("☼    ☼" +
-                "☼7☺  ☼" +
+        assertE("☼7   ☼" +
+                "☼ ☺  ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
+
         hero.left();
         game.tick();
+
         // then
-        assertE("☼    ☼" +
+        assertE("☼7   ☼" +
                 "☼☺   ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼");
-        hero.right();
+
+        hero.up();
         game.tick();
+        diceNew(-1, -1, 3, 0);
+        game.tick();
+
         // then
-        assertE("☼ 7  ☼" +
-                "☼ ☺  ☼" +
+        assertE("☼☺   ☼" +
+                "☼   7☼" +
                 "☼    ☼" +
                 "☼    ☼" +
                 "☼    ☼" +
