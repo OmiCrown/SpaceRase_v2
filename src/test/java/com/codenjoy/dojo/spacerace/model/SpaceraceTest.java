@@ -536,7 +536,7 @@ public class SpaceraceTest {
     }
 
     @Test
-    public void shouldStoneDestroyedByBullet() {
+    public void shouldStoneIsDestroyedByBullet() {
         //Given
         givenFl("☼   ☼" +
                 "☼   ☼" +
@@ -544,29 +544,11 @@ public class SpaceraceTest {
                 "☼   ☼" +
                 "☼ ☺ ☼");
         //When
-        dice(1, 1, 1, -1);
+        diceNew(1);
         hero.recharge();
         hero.act();
         game.tick();
-
-        //Then
-        assertE("☼ 7 ☼" +
-                "☼   ☼" +
-                "☼   ☼" +
-                "☼ * ☼" +
-                "☼ ☺ ☼");
-
-        //When
         game.tick();
-
-        //Then
-        assertE("☼ 7 ☼" +
-                "☼   ☼" +
-                "☼ * ☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼");
-
-        //When
         game.tick();
 
         //Then
@@ -589,7 +571,7 @@ public class SpaceraceTest {
     }
 
     @Test
-    public void shouldStoneDestroyedByBullet2() {
+    public void shouldStoneIsDestroyedByBullet2() {
         //Given
         givenFl("☼   ☼" +
                 "☼   ☼" +
@@ -598,13 +580,13 @@ public class SpaceraceTest {
                 "☼   ☼");
 
         //When
-        dice(1, 1, 1, -1);
+        diceNew(1);
         hero.recharge();
         hero.act();
         game.tick();
 
         //Then
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼   ☼" +
                 "☼ * ☼" +
                 "☼ ☺ ☼" +
@@ -614,7 +596,7 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼ * ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼" +
@@ -634,7 +616,7 @@ public class SpaceraceTest {
         game.tick();
 
         //Then
-        assertE("☼ 7 ☼" +
+        assertE("☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼ ☺ ☼" +
@@ -653,7 +635,7 @@ public class SpaceraceTest {
                 "☼   ☼");
 
         //When
-        dice(1, 1, -1, 1); // камень не появляем, мину появляем, тоже на 3-м тике
+        diceNew(-1, 1); // камень не появляем, мину появляем, тоже на 3-м тике
         game.tick();
         game.tick();
         game.tick();
@@ -674,21 +656,35 @@ public class SpaceraceTest {
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
-                "☼☺  ☼");
+                "☼  ☺☼");
 
         //when
-        dice(1, 1, -1, 2);
+        diceNew(-1, 0);
         game.tick();
         game.tick();
         game.tick();
 
         //then
-        assertE("☼ 7♣☼" +
+        assertE("☼♣  ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
                 "☼   ☼" +
-                "☼☺  ☼");
+                "☼  ☺☼");
+
+        //when
+        diceNew(-1, 2);
+        game.tick();
+        game.tick();
+        game.tick();
+
+        //then
+        assertE("☼  ♣☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼♣  ☼" +
+                "☼  ☺☼");
     }
+
 // не понятно, почему перед первым тиком уже появился магазин
     @Test
     public void shouldNewBombAndNewStoneAtNewPlace() {
