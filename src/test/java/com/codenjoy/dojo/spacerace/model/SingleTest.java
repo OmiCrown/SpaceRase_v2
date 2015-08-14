@@ -41,8 +41,8 @@ public class SingleTest {
 
         dice = mock(Dice.class);
         Spacerace spacerace = new Spacerace(level, dice,
-                SpaceraceTest.UNLIMITED_CHARGER.getTicksToRecharge(),
-                SpaceraceTest.UNLIMITED_CHARGER.getBulletsCount());
+                SpaceraceTest.ONE_BULLET_CHARGER.getTicksToRecharge(),
+                SpaceraceTest.ONE_BULLET_CHARGER.getBulletsCount());
         PrinterFactory factory = new PrinterFactoryImpl();
 
         listener1 = mock(EventListener.class);
@@ -64,8 +64,12 @@ public class SingleTest {
         game3.newGame();
     }
 
-    private void dice(int x, int y) {
+    private void diceOld(int x, int y) {
         when(dice.next(anyInt())).thenReturn(x, y);
+    }
+
+    private void dice(int x, int y) {
+        when(dice.next(anyInt())).thenReturn(x, y, x, y, x, y, -1);
     }
 
     private void asrtFl1(String expected) {
