@@ -7,7 +7,6 @@ import com.codenjoy.dojo.services.PrinterFactoryImpl;
 import com.codenjoy.dojo.spacerace.services.Events;
 import com.codenjoy.dojo.utils.TestUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
@@ -25,9 +24,9 @@ import static org.mockito.Mockito.when;
  */
 public class SpaceraceTest {
 
-    public final static BulletCharger UNLIMITED_CHARGER = new BulletCharger(1000, 1);
+    public final static BulletCharger ONE_BULLET_CHARGER = new BulletCharger(100, 1);
     private Spacerace game;
-    private BulletCharger charger = UNLIMITED_CHARGER;
+    private BulletCharger charger = ONE_BULLET_CHARGER;
     private Hero hero;
     private Dice dice;
     private EventListener listener;
@@ -49,7 +48,7 @@ public class SpaceraceTest {
     private void diceNew(int...ints) {
         OngoingStubbing<Integer> when = when(dice.next(anyInt()));
 
-        if(ints.length == 0){ // we work just with stones
+        if(ints.length == 0){ // we work just with nothing
             when = when.thenReturn(-1);
         }
 
@@ -87,6 +86,115 @@ public class SpaceraceTest {
         assertEquals(TestUtils.injectN(expected),
                 printer.getPrinter(game.reader(), player).print());
     }
+
+    private void newBulletPackForHeroWithGivenBullets(int i) {
+        int ticksToRecharge = 1000;
+        int bulletsCount = i;
+        charger = new BulletCharger(ticksToRecharge, bulletsCount);
+    }
+
+    @Test
+    public void shouldNoBulletsAfterFireWithEmptyBulletCharger() {
+
+        newBulletPackForHeroWithGivenBullets(10);
+        //Given
+        givenFl("☼   ☼" +
+                "☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //when
+        diceNew(-1, -1, -1, -1);
+
+        hero.act();
+        game.tick();
+
+        //Then
+        assertE("☼   ☼" +
+                "☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //when
+        diceNew(-1, -1, 1, 0);
+        game.tick();
+
+        //Then
+        assertE("☼   ☼" +
+                "☼ 7 ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //when
+        hero.up();
+        game.tick();
+        hero.recharge();
+
+        //then
+        assertE("☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //When
+        hero.act();
+        game.tick();
+
+        //then
+        assertE("☼ * ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        //When
+        hero.act();
+        game.tick();
+
+        //then
+        assertE("☼ * ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+        hero.act();
+        game.tick();
+
+        //then
+        assertE("☼ * ☼" + //TODO не присваивается новый BulletCharger
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        for (int i = 0; i < 8; i++) {
+            hero.act();
+            game.tick();
+        }
+
+        //Given
+        assertE("☼   ☼" +   // todo по подстетам пуля должна быть (последняя), говорит, что нету
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+
+        hero.act();
+        game.tick();
+
+        //Given
+        assertE("☼   ☼" +
+                "☼ ☺ ☼" +
+                "☼   ☼" +
+                "☼   ☼" +
+                "☼   ☼");
+    }
+
+
 
     // есть карта со мной
     @Test
@@ -1079,89 +1187,9 @@ public class SpaceraceTest {
                 "☼   ☼" +
                 "☼   ☼");
     }
+}
 
-    @Test
-    public void shouldNoBulletsAfterFireWithEmptyBulletCharger() {
-       //Given
-        givenFl("☼   ☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼");
 
-        //when
-        diceNew(-1, -1, -1, -1);
-        hero.act();
-        game.tick();
-
-        //Then
-        assertE("☼   ☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼");
-
-        //when
-        diceNew(-1, -1, 1, 0);
-        game.tick();
-
-        //Then
-        assertE("☼   ☼" +
-                "☼ 7 ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼");
-
-        //when
-        hero.up();
-        game.tick();
-
-        //then
-        assertE("☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼" +
-                "☼   ☼");
-
-        //When
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-        hero.act();
-        game.tick();
-
-        //Given
-        assertE("☼   ☼" +   // todo по подстетам пуля должна быть (последняя), говорит, что нету
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼" +
-                "☼   ☼");
-
-        hero.act();
-        game.tick();
-
-        //Given
-        assertE("☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼" +
-                "☼   ☼");
-    }
 
     // появление на поле магазина патронов
     // итераторы
@@ -1188,4 +1216,4 @@ public class SpaceraceTest {
     рефакторинг!!!!
 
     */
-}
+
