@@ -19,8 +19,9 @@ public class AlAnTestSolver implements Solver<Board> {
 	private int delay = 0;
 	private boolean vpravo = true;
 	private Board board;
+    private int bullets = 0;
 
-	public AlAnTestSolver(Dice dice) {
+    public AlAnTestSolver(Dice dice) {
 	}
 
 	/**
@@ -47,10 +48,11 @@ public class AlAnTestSolver implements Solver<Board> {
 		Direction result = Direction.STOP;
 		result = findDirection(board);
 		if (result != null) {
-			if(isStoneOrBombAtop()){
+			if(isStoneOrBombAtop() & bullets > 0){
                 if(isBulletAtop()){
                     return result.toString();
                 }
+                bullets--;
                 return result + Direction.ACT.toString();
             }
             return result.toString();
@@ -130,6 +132,10 @@ public class AlAnTestSolver implements Solver<Board> {
 					newDistance = distance;
 					result = Direction.UP;
 				}
+
+                if(newDistance < 1){
+                    bullets = 10;
+                }
 			}
 		}
 		return result;
@@ -162,9 +168,8 @@ public class AlAnTestSolver implements Solver<Board> {
         int x = me.getX();
         int y = me.getY();
 
-        if ((board.isBombAt(x, y - 4)) &
-                (bestDirection.equals(Direction.UP))){
-            // TODO implement directions
+        if ((board.isBombAt(x, y - 4)) & (bestDirection.equals(Direction.UP))){
+            // TODO implement directions asap
             // посчитать дистанции вправо и влево, где меньше, то туда
             return Direction.RIGHT;
         }
@@ -249,10 +254,8 @@ public class AlAnTestSolver implements Solver<Board> {
                 (bestDirection.equals(Direction.LEFT))){
             return Direction.LEFT;
         }
-
         return bestDirection;
     }
-
     private Direction findBestDirectionNearStone(Board board, Point me, Direction givenDirection) {
         Direction bestDirection = givenDirection;
 
@@ -269,7 +272,7 @@ public class AlAnTestSolver implements Solver<Board> {
         if (((board.isStoneAt(me.getX(), me.getY() - 1)) ||
                 (board.isStoneAt(me.getX(), me.getY() - 2))) &
                 (bestDirection.equals(Direction.UP))){
-                return Direction.LEFT;
+            return Direction.LEFT;
         }
         return bestDirection;
     }

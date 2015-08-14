@@ -231,7 +231,7 @@ public class AlAnTestSolverTest {
 
     }
 
-    @Ignore  // todo очень временно (доделать полсчет дистанций)
+    @Ignore  // todo очень временно (доделать подсчет дистанций)
     @Test
     public void shouldLefttWhenUpAndBombIsUp2() {
         assertA("☼ 7   ☼" +
