@@ -151,6 +151,9 @@ public class AlAnTestSolver implements Solver<Board> {
 
             checkedResultStone = findBestDirectionNearStone(board, me, result);
             checkedResultBomb = findBestDirectionNearBomb(board, me, result);
+            //todo check condition:
+            checkedResultBomb = findBestDirectionNearBomb(board, me, checkedResultBomb);
+            checkedResultHighPosition(board, me, result);
 
             if(checkedResultBomb.equals(result)){
                 checkedDirection = checkedResultStone;
@@ -160,6 +163,11 @@ public class AlAnTestSolver implements Solver<Board> {
 		}
 		return checkedDirection;
 	}
+
+    private Direction checkedResultHighPosition(Board board, Point me, Direction result) {
+        //todo implement !!!!
+        return result;
+    }
 
     private Direction findBestDirectionNearBomb(Board board, Point me, Direction givenDirection) {
         Direction bestDirection = givenDirection;
@@ -174,11 +182,15 @@ public class AlAnTestSolver implements Solver<Board> {
             return Direction.RIGHT;
         }
 
-        if ((board.isBombAt(x, y - 3)) &
-                (bestDirection.equals(Direction.UP))){
+        if ((board.isBombAt(x, y - 3)) & (bestDirection.equals(Direction.UP))){
             // TODO implement directions
             // посчитать дистанции справо и влево, где меньше, то туда
             return Direction.RIGHT;
+        }
+
+        if (board.isBombAt(x, y - 2)){
+            // TODO implement directions
+            return Direction.DOWN;
         }
 
         // если мина вверху справа в соседней колонке и движимся вправо или вверх, то на одну влево
