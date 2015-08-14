@@ -244,7 +244,7 @@ public class Spacerace implements Tickable, Field {
     }
 
     private void createBulletPack() {//TODO Паки создаюься по одному за тик, можно в цикле создать все сразу
-        if(currentBulletPacks < MAX_COUNT_BULLET_PACKS) {
+        if(currentBulletPacks < maxCountBulletPacks()) {
             int x = dice.next(size - 2);
             int y = dice.next(size/3) + size*2/3;
             if (x != -1 && y != -1) {
@@ -252,6 +252,10 @@ public class Spacerace implements Tickable, Field {
                     currentBulletPacks++;
                 }
             }
+    }
+
+    private int maxCountBulletPacks() {
+        return (players.size() - 1)/ 3 + 1;
     }
 
     private void addBulletPack(int x, int y) {

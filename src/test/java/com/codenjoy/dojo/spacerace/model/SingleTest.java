@@ -27,6 +27,12 @@ public class SingleTest {
     private Single game1;
     private Single game2;
     private Single game3;
+    private EventListener listener4;
+    private EventListener listener5;
+    private EventListener listener6;
+    private Single game4;
+    private Single game5;
+    private Single game6;
     private Dice dice;
 
     // появляется другие игроки, игра становится мультипользовательской
@@ -53,6 +59,15 @@ public class SingleTest {
 
         listener3 = mock(EventListener.class);
         game3 = new Single(spacerace, listener3, factory);
+
+        listener4 = mock(EventListener.class);
+        game4 = new Single(spacerace, listener4, factory);
+
+        listener5 = mock(EventListener.class);
+        game5 = new Single(spacerace, listener5, factory);
+
+        listener6 = mock(EventListener.class);
+        game6 = new Single(spacerace, listener6, factory);
 
         dice(1, 0);
         game1.newGame();
@@ -350,6 +365,59 @@ public class SingleTest {
                 "☼   ☼\n" +
                 "☼   ☼\n" +
                 "☼   ☼\n" +
+                "☼☺☻☻☼\n");
+    }
+
+    // кол-во баллет паков 1
+    @Test
+    public void shodOneBulletPack() {
+
+        dice(2, 1);
+        game1.tick();
+        dice(-1, -1);
+        game1.tick();
+        dice(-1, -1);
+        game1.tick();
+        dice(1, 1);
+        game1.tick();
+
+        asrtFl1("☼  7☼\n" +
+                "☼   ☼\n" +
+                "☼   ☼\n" +
+                "☼   ☼\n" +
+                "☼☺☻☻☼\n");
+
+    }
+
+    // кол-во баллет паков 1
+    @Test
+    public void shodTwoBulletPacks() {
+        dice(1, 1);
+        game4.newGame();
+
+        dice(2, 1);
+        game5.newGame();
+
+        dice(3, 1);
+        game6.newGame();
+
+        dice(2, 1);// появляются 2 баллет пака
+        game1.tick();
+        dice(1, 1);
+        game1.tick();
+
+        dice(-1, -1);// не появляется камень и бомба
+        game1.tick();
+        dice(-1, -1);
+        game1.tick();
+
+        dice(0, 1);// не появляется 3-й баллет пак
+        game1.tick();
+
+        asrtFl1("☼ 77☼\n" +
+                "☼   ☼\n" +
+                "☼   ☼\n" +
+                "☼☻☻☻☼\n" +
                 "☼☺☻☻☼\n");
     }
 }
