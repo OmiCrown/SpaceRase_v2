@@ -202,17 +202,11 @@ public class YourSolver implements Solver<Board> {
             return Direction.DOWN;
         }
 
-        // если мина вверху справа в соседней колонке и движимся вправо или вверх,
+        // + если мина вверху справа в соседней колонке и движимся вправо или вверх,
         // то на одну влево
-        if ((board.isBombAt(x + 1, y - 3)) & // TODO implement directions
+        if ((board.isBombAt(x + 1, y - 3) || board.isBombAt(x + 1, y - 2) ) &
                 (bestDirection.equals(Direction.RIGHT) ||
                         bestDirection.equals(Direction.UP))){
-            return Direction.LEFT;
-        }
-
-        // если мина вверху справа в соседней колонке и движимся вправо или вверх, то на одну влево
-        if ((board.isBombAt(x + 1, y - 2)) & // TODO implement directions
-                (bestDirection.equals(Direction.RIGHT) || bestDirection.equals(Direction.UP))){
             return Direction.LEFT;
         }
 
