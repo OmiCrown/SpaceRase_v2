@@ -179,9 +179,8 @@ public class SolverTest {
                 , Direction.UP);
     }
 
-    @Ignore  //todo implement direction solver
     @Test
-    public void shouldFindLeftWhenUpAndBombIsUp() {
+    public void shouldFindLeftWhen4UpAndBombIsUp() {
         assertA("☼ 7   ☼" +
                 "☼     ☼" +
                 "☼  ♣  ☼" +
@@ -193,7 +192,7 @@ public class SolverTest {
     }
 
     @Test
-    public void shouldFindRightWhenUpAndBombIsUp(){
+    public void shouldFindRightWhen4UpAndBombIsUp(){
             assertA("☼   7 ☼" +
                     "☼     ☼" +
                     "☼  ♣  ☼" +
@@ -202,9 +201,43 @@ public class SolverTest {
                     "☼     ☼" +
                     "☼  ☺  ☼"
                     , Direction.RIGHT);
-        }
+    }
 
+    @Test
+    public void shouldFindLeftWhen3UpAndBombIsUp() {
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ☺  ☼"
+                , Direction.LEFT);
+    }
 
+    @Test
+    public void shouldFindRightWhen3UpAndBombIsUp(){
+            assertA("☼   7 ☼" +
+                    "☼     ☼" +
+                    "☼     ☼" +
+                    "☼  ♣  ☼" +
+                    "☼     ☼" +
+                    "☼     ☼" +
+                    "☼  ☺  ☼"
+                    , Direction.RIGHT);
+    }
+
+    @Test
+    public void shouldFindDownWhen2UpAndBombIsUp() {
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼  ☺  ☼" +
+                "☼     ☼"
+                , Direction.DOWN);
+    }
 
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));

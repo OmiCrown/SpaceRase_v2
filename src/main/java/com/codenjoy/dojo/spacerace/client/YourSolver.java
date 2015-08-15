@@ -28,6 +28,7 @@ public class YourSolver implements Solver<Board> {
     public YourSolver(Dice dice) {
         this.dice = dice;
     }
+
     public static void main(String[] args) {
         start(USER_NAME, WebSocketRunner.Host.REMOTE);
     }
@@ -47,8 +48,8 @@ public class YourSolver implements Solver<Board> {
         this.board = board;
         if (board.isGameOver())
             return "";
-        Direction result = Direction.STOP;
-        result = findDirection(board);
+        Direction result;
+        result = findDirection();
         if (result != null) {
             if(isStoneOrBombAtop() & bullets > 0){
                 if(isBulletAtop()){
@@ -86,7 +87,7 @@ public class YourSolver implements Solver<Board> {
         return false;
     }
 
-    private Direction findDirection(Board board) {
+    private Direction findDirection() {
         Direction result = Direction.STOP;
 
         if (board.getMe() != null) {
@@ -94,7 +95,7 @@ public class YourSolver implements Solver<Board> {
         }else {
             System.out.println("Me not found!");
         }
-        return CheckResult(result, board);
+        return CheckResult(result);
     }
 
     private Direction findDirectionToBulletPack() {
@@ -160,16 +161,17 @@ public class YourSolver implements Solver<Board> {
         }
     }
 
-    private Direction CheckResult(Direction result, Board board) {
-        Direction checkedResultStone = result;
-        Direction checkedResultBomb = result;
+    private Direction CheckResult(Direction result) {
+        Direction checkedResultStone;
+        Direction checkedResultBomb;
         Direction checkedDirection = Direction.STOP;
 
         Point me = board.getMe();
         if (me != null) {
 
-            checkedResultStone = findBestDirectionNearStone(board, me, result);
-            checkedResultBomb = findBestDirectionNearBomb(board, me, result);
+            checkedResultStone = findBestDirectionNearStone(result);
+            checkedResultBomb = findBestDirectionNearBomb(result);
+//            checkedHighPosition
 
             if(checkedResultBomb.equals(result)){
                 checkedDirection = checkedResultStone;
@@ -177,33 +179,34 @@ public class YourSolver implements Solver<Board> {
                 checkedDirection = checkedResultBomb;
             }
         }
-
         return checkedDirection;
     }
 
-    private Direction findBestDirectionNearBomb(Board board, Point me, Direction givenDirection) {
+    private Direction findBestDirectionNearBomb(Direction givenDirection) {
         Direction bestDirection = givenDirection;
+        int x = board.getMe().getX();
+        int y = board.getMe().getY();
 
-        // проход навстречу
-        int x = me.getX();
-        int y = me.getY();
+        // + проход навстречу
+		if ((board.isBombAt(x, y - 4) || board.isBombAt(x, y - 3))
+                & (bestDirection.equals(Direction.UP))) {
+			if ((new PointImpl(x + 1, y)).distance(getBulletPack()) >
+                    (new PointImpl(x - 1, y)).distance(getBulletPack())) {
+				return Direction.LEFT;
+			}
+			return Direction.RIGHT;
+		}
 
-        if ((board.isBombAt(x, y - 4)) & (bestDirection.equals(Direction.UP))){
-            // TODO implement directions asap
-            // посчитать дистанции вправо и влево, где меньше, то туда
-
-            return Direction.RIGHT;
+        // + если мина вверху в вдух ячейках - уходим вниз
+        if ((board.isBombAt(x, y - 2))){
+            return Direction.DOWN;
         }
 
-        if ((board.isBombAt(x, y - 3)) & (bestDirection.equals(Direction.UP))){
-            // TODO implement directions
-            // посчитать дистанции справо и влево, где меньше, то туда
-            return Direction.RIGHT;
-        }
-
-        // если мина вверху справа в соседней колонке и движимся вправо или вверх, то на одну влево
+        // если мина вверху справа в соседней колонке и движимся вправо или вверх,
+        // то на одну влево
         if ((board.isBombAt(x + 1, y - 3)) & // TODO implement directions
-                (bestDirection.equals(Direction.RIGHT) || bestDirection.equals(Direction.UP))){
+                (bestDirection.equals(Direction.RIGHT) ||
+                        bestDirection.equals(Direction.UP))){
             return Direction.LEFT;
         }
 
@@ -276,25 +279,27 @@ public class YourSolver implements Solver<Board> {
         }
         return bestDirection;
     }
-    private Direction findBestDirectionNearStone(Board board, Point me, Direction givenDirection) {
-        Direction bestDirection = givenDirection;
 
-        if ((board.isStoneAt(me.getX() - 1, me.getY() - 1)) &
+    private Direction findBestDirectionNearStone(Direction givenDirection) {
+        Direction bestDirection = givenDirection;
+        int x = board.getMe().getX();
+        int y = board.getMe().getY();
+
+        if ((board.isStoneAt(x - 1, y - 1)) &
                 (bestDirection.equals(Direction.LEFT))){
             return Direction.STOP;
         }
 
-        if ((board.isStoneAt(me.getX() + 1, me.getY() - 1)) &
+        if ((board.isStoneAt(x + 1, y - 1)) &
                 (bestDirection.equals(Direction.RIGHT))){
             return Direction.STOP;
         }
 
-        if (((board.isStoneAt(me.getX(), me.getY() - 1)) ||
-                (board.isStoneAt(me.getX(), me.getY() - 2))) &
+        if (((board.isStoneAt(x, y - 1)) ||
+                (board.isStoneAt(x, y - 2))) &
                 (bestDirection.equals(Direction.UP))){
             return Direction.LEFT;
         }
         return bestDirection;
     }
-
 }
