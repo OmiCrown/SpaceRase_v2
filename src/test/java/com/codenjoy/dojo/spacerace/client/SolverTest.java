@@ -4,6 +4,7 @@ import com.codenjoy.dojo.client.Direction;
 import com.codenjoy.dojo.client.Solver;
 import com.codenjoy.dojo.services.Dice;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -176,9 +177,34 @@ public class SolverTest {
                 "☼     ☼" +
                 "☼     ☼"
                 , Direction.UP);
-
-
     }
+
+    @Ignore  //todo implement direction solver
+    @Test
+    public void shouldFindLeftWhenUpAndBombIsUp() {
+        assertA("☼ 7   ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼  ☺  ☼"
+                , Direction.LEFT);
+    }
+
+    @Test
+    public void shouldFindRightWhenUpAndBombIsUp(){
+            assertA("☼   7 ☼" +
+                    "☼     ☼" +
+                    "☼  ♣  ☼" +
+                    "☼     ☼" +
+                    "☼     ☼" +
+                    "☼     ☼" +
+                    "☼  ☺  ☼"
+                    , Direction.RIGHT);
+        }
+
+
 
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));

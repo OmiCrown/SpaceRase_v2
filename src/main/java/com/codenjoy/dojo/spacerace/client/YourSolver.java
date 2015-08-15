@@ -1,5 +1,7 @@
 package com.codenjoy.dojo.spacerace.client;
 
+import java.util.List;
+
 import com.codenjoy.dojo.client.Direction;
 import com.codenjoy.dojo.client.Solver;
 import com.codenjoy.dojo.client.WebSocketRunner;
@@ -8,8 +10,6 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.spacerace.model.Elements;
-
-import java.util.List;
 
 /**
  * User: your name
@@ -27,6 +27,19 @@ public class YourSolver implements Solver<Board> {
 
     public YourSolver(Dice dice) {
         this.dice = dice;
+    }
+    public static void main(String[] args) {
+        start(USER_NAME, WebSocketRunner.Host.REMOTE);
+    }
+
+    public static void start(String name, WebSocketRunner.Host server) {
+        try {
+            WebSocketRunner.run(server, name,
+                    new YourSolver(new RandomDice()),
+                    new Board());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,6 +61,7 @@ public class YourSolver implements Solver<Board> {
         }
         return Direction.STOP.toString();
     }
+
     private boolean isBulletAtop() {
         int y = board.getMe().getY();
         int x = board.getMe().getX();
@@ -75,58 +89,75 @@ public class YourSolver implements Solver<Board> {
     private Direction findDirection(Board board) {
         Direction result = Direction.STOP;
 
-        Point me = board.getMe();
-        if (me != null) {
-            int x = me.getX();
-            int y = me.getY();
-            result = findDirectionToBulletPack(board, me, result);
+        if (board.getMe() != null) {
+            result = findDirectionToBulletPack();
+        }else {
+            System.out.println("Me not found!");
         }
         return CheckResult(result, board);
     }
 
-    private Direction findDirectionToBulletPack(Board board, Point me, Direction result) {
-        List<Point> boxes = board.get(Elements.BULLET_PACK);
-        if (boxes.size() != 0) {
-            Point box = boxes.get(0);
-            if (box != null) {
-                Point newMe;
-                double newDistance = (double) Integer.MAX_VALUE;
-                double distance;
+    private Direction findDirectionToBulletPack() {
+        Direction directionToBulletPack = Direction.STOP;
+        Point me = board.getMe();
+        Point box = getBulletPack();
 
-                newMe = new PointImpl(me.getX() + 1, me.getY());
-                distance = newMe.distance(box);
-                if (distance < newDistance) {
-                    newDistance = distance;
-                    result = Direction.RIGHT;
-                }
+        if (isAtLeastOneBulletPack(box)) {
+            Point newMe;
+            int x = me.getX();
+            int y = me.getY();
+            double newDistance = (double) Integer.MAX_VALUE;
+			double distance;
 
-                newMe = new PointImpl(me.getX(), me.getY() + 1);
-                distance = newMe.distance(box);
-                if (distance < newDistance) {
-                    newDistance = distance;
-                    result = Direction.DOWN;
-                }
+            newMe = new PointImpl(x + 1, y);
+			distance = newMe.distance(box);
+			if (distance < newDistance) {
+				newDistance = distance;
+				directionToBulletPack = Direction.RIGHT;
+			}
 
-                newMe = new PointImpl(me.getX() - 1, me.getY());
-                distance = newMe.distance(box);
-                if (distance < newDistance) {
-                    newDistance = distance;
-                    result = Direction.LEFT;
-                }
+			newMe = new PointImpl(x, y + 1);
+			distance = newMe.distance(box);
+			if (distance < newDistance) {
+				newDistance = distance;
+				directionToBulletPack = Direction.DOWN;
+			}
 
-                newMe = new PointImpl(me.getX(), me.getY() - 1);
-                distance = newMe.distance(box);
-                if (distance < newDistance) {
-                    newDistance = distance;
-                    result = Direction.UP;
-                }
+			newMe = new PointImpl(x - 1, y);
+			distance = newMe.distance(box);
+			if (distance < newDistance) {
+				newDistance = distance;
+				directionToBulletPack = Direction.LEFT;
+			}
 
-                if(newDistance < 1){
-                    bullets = 10;
-                }
-            }
+			newMe = new PointImpl(x, y - 1);
+			distance = newMe.distance(box);
+			if (distance < newDistance) {
+				newDistance = distance;
+				directionToBulletPack = Direction.UP;
+			}
+
+			rechargeBulletsWhenNeed(newDistance);
         }
-        return result;
+        return directionToBulletPack;
+    }
+
+    private Point getBulletPack() {
+        //todo найти ближайший, а не первый по списку (но можно рэндомом)
+        //или вообще какую стратегию.. типа, где меньше игроков,
+        // или самая низкая по у
+        return board.get(Elements.BULLET_PACK).get(0);
+    }
+
+    private boolean isAtLeastOneBulletPack(Point box) {
+        List<Point> boxes = board.get(Elements.BULLET_PACK);
+        return boxes.size() != 0 && box != null;
+    }
+
+    private void rechargeBulletsWhenNeed(double newDistance) {
+        if(newDistance < 1){
+            bullets = 10;
+        }
     }
 
     private Direction CheckResult(Direction result, Board board) {
@@ -160,11 +191,11 @@ public class YourSolver implements Solver<Board> {
         if ((board.isBombAt(x, y - 4)) & (bestDirection.equals(Direction.UP))){
             // TODO implement directions asap
             // посчитать дистанции вправо и влево, где меньше, то туда
+
             return Direction.RIGHT;
         }
 
-        if ((board.isBombAt(x, y - 3)) &
-                (bestDirection.equals(Direction.UP))){
+        if ((board.isBombAt(x, y - 3)) & (bestDirection.equals(Direction.UP))){
             // TODO implement directions
             // посчитать дистанции справо и влево, где меньше, то туда
             return Direction.RIGHT;
@@ -265,17 +296,5 @@ public class YourSolver implements Solver<Board> {
         }
         return bestDirection;
     }
-    public static void main(String[] args) {
-        start(USER_NAME, WebSocketRunner.Host.REMOTE);
-    }
 
-    public static void start(String name, WebSocketRunner.Host server) {
-        try {
-            WebSocketRunner.run(server, name,
-                    new YourSolver(new RandomDice()),
-                    new Board());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
