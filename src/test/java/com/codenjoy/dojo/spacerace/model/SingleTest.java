@@ -168,6 +168,7 @@ public class SingleTest {
     // привязать пули к игроку, и каждый получат очки за свое
     @Test
     public void shouldKillOneHeroAnother() {
+        game3.getPlayer().getHero().recharge();
         game1.getJoystick().up();
         game2.getJoystick().up();
 
@@ -229,6 +230,7 @@ public class SingleTest {
     // если игрок идет на встречу булету, то он все равно должен погибать
     @Test
     public void shouldKillOneHeroAnother_caseGoOnBullet() {
+        game3.getPlayer().getHero().recharge();
         game1.getJoystick().up();
         game2.getJoystick().up();
 
@@ -283,6 +285,7 @@ public class SingleTest {
     // если игрок идет на встречу булету, то он все равно должен погибать
     @Test
     public void shouldKillOneHeroAnother_caseGoOnBullet_case2() {
+        game3.getPlayer().getHero().recharge();
         game1.getJoystick().up();
         game2.getJoystick().up();
         game3.getJoystick().up();
@@ -342,7 +345,7 @@ public class SingleTest {
 
         dice(1, 0);
         game2.newGame();
-
+        dice(-1, -1);
         game1.tick();
 
         asrtFl1("☼   ☼\n" +
