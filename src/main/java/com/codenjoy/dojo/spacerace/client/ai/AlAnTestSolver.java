@@ -16,8 +16,6 @@ import com.codenjoy.dojo.spacerace.services.GameRunner;
 
 public class AlAnTestSolver implements Solver<Board> {
 
-	private int delay = 0;
-	private boolean vpravo = true;
 	private Board board;
     private int bullets = 0;
 
@@ -151,8 +149,6 @@ public class AlAnTestSolver implements Solver<Board> {
 
             checkedResultStone = findBestDirectionNearStone(board, me, result);
             checkedResultBomb = findBestDirectionNearBomb(board, me, result);
-            //todo check condition:
-            checkedResultBomb = findBestDirectionNearBomb(board, me, checkedResultBomb);
             checkedResultHighPosition(board, me, result);
 
             if(checkedResultBomb.equals(result)){
