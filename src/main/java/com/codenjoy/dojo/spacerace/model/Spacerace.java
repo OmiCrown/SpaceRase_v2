@@ -15,11 +15,9 @@ import static com.codenjoy.dojo.services.PointImpl.pt;
 public class Spacerace implements Tickable, Field {
 
     private static final int NEW_APPEAR_PERIOD = 3;
-    private static final int MAX_COUNT_BULLET_PACKS = 1;
     private final int size;
     private List<Wall> walls;
     private List<BulletPack> bulletPacks;
-    private List<Gold> gold;
     private List<Bomb> bombs;
     private List<Bullet> bullets;
     private List<Explosion> explosions;
@@ -39,7 +37,6 @@ public class Spacerace implements Tickable, Field {
         this.ticksToRecharge = ticksToRecharge;
         this.bulletsCount = bulletsCount;
         walls = level.getWalls();
-        gold = level.getGold();
         size = level.getSize();
         players = new LinkedList<Player>();
         bulletPacks = new LinkedList<BulletPack>();
@@ -335,9 +332,9 @@ public class Spacerace implements Tickable, Field {
         return  !walls.contains(pt) &&
                 !bullets.contains(pt) &&
                 !stones.contains(pt) &&
+                !bombs.contains(pt) &&
                 !explosions.contains(pt) &&
                 !getBombWaves().contains(pt) &&
-                !gold.contains(pt) &&
                 !getHeroes().contains(pt);
     }
 
@@ -346,12 +343,9 @@ public class Spacerace implements Tickable, Field {
         bullets.add(new Bullet(x, y, hero));
     }
 
-    public List<Gold> getGold() {
-        return gold;
-    }
 
     public List<Hero> getHeroes() {
-        List<Hero> result = new ArrayList<Hero>(players.size());
+        List<Hero> result = new ArrayList<Hero>(players.size());//todo add iterator
         for (Player player : players) {
             result.add(player.getHero());
         }
@@ -392,7 +386,6 @@ public class Spacerace implements Tickable, Field {
                 result.addAll(explosions);
                 result.addAll(walls);
                 result.addAll(getHeroes());
-                result.addAll(getGold());
                 result.addAll(bombs);
                 result.addAll(stones);
                 result.addAll(bullets);

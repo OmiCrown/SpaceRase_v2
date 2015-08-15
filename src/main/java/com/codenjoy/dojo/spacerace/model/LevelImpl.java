@@ -28,19 +28,8 @@ public class LevelImpl implements Level {
     public List<Hero> getHero(BulletCharger charger) {
         List<Hero> result = new LinkedList<Hero>();
 
-        for (Point pt : getPointsOf(Elements.HERO)) {
+        for (Point pt : getPointsOf(Elements.HERO)) { //todo не надо ли сюда добавить dead_hero?
             result.add(new Hero(pt, charger));
-        }
-
-        return result;
-    }
-
-    @Override
-    public List<Gold> getGold() {
-        List<Gold> result = new LinkedList<Gold>();
-
-        for (Point pt : getPointsOf(Elements.GOLD)) {
-            result.add(new Gold(pt));
         }
 
         return result;
