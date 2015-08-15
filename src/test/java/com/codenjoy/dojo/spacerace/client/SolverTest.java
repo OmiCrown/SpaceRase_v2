@@ -239,6 +239,30 @@ public class SolverTest {
                 , Direction.DOWN);
     }
 
+    @Test
+    public void shouldFindLeftWhenBombIs3Up1RightAndUp() {
+        assertA("☼  7  ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼ ☺   ☼" +
+                "☼     ☼"
+                , Direction.LEFT);
+    }
+
+    @Test
+    public void shouldFindLeftWhenBombIs3Up1RightAndRight() {
+        assertA("☼     ☼" +
+                "☼     ☼" +
+                "☼  ♣  ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼ ☺  7☼" +
+                "☼     ☼"
+                , Direction.LEFT);
+    }
+
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));
         assertEquals(expected.toString(), actual);
