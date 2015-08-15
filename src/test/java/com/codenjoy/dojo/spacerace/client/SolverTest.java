@@ -122,7 +122,7 @@ public class SolverTest {
                 "☼ 0 ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼"
-                , Direction.LEFT);
+                , Direction.RIGHT);
 
         assertA("☼   ☼" +
                 "☼ 7 ☼" +
@@ -139,7 +139,7 @@ public class SolverTest {
                 "☼   ☼" +
                 "☼ ☺ ☼" +
                 "☼   ☼"
-                , Direction.LEFT);
+                , Direction.RIGHT);
 
         assertA("☼ 7 ☼" +
                 "☼   ☼" +
@@ -262,6 +262,50 @@ public class SolverTest {
                 "☼     ☼"
                 , Direction.LEFT);
     }
+
+    @Test
+    public void shouldDownWhenNotFoundBulletPack() {
+        assertA("☼     ☼" +
+                "☼7    ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☺    ☼" +
+                "☼     ☼"
+                , Direction.UP);
+
+        assertA("☼     ☼" +
+                "☼0    ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☺    ☼" +
+                "☼     ☼"
+                , Direction.DOWN);
+    }
+
+    @Test
+    public void shouldReturn11WhenNotFoundMe() {
+        assertA("☼     ☼" +
+                "☼7    ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☺    ☼" +
+                "☼     ☼"
+                , Direction.UP);
+
+        assertA("☼     ☼" +
+                "☼0    ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼     ☼"
+                , Direction.DOWN);
+    }
+
+
 
     private void assertA(String board, Direction expected) {
         String actual = ai.get(board(board));

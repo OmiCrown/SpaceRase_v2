@@ -24,12 +24,16 @@ public class YourSolver implements Solver<Board> {
     private Dice dice;
     private Board board;
     private int bullets = 0;
+    Point bulletPack;
+    private Point meAt;
+    private int bulletsToCharge = 10;
 
     public YourSolver(Dice dice) {
         this.dice = dice;
     }
 
     public static void main(String[] args) {
+//        LocalGameRunner.run(new GameRunner(), new YourSolver(new RandomDice()), new Board());
         start(USER_NAME, WebSocketRunner.Host.REMOTE);
     }
 
@@ -51,7 +55,7 @@ public class YourSolver implements Solver<Board> {
         Direction result;
         result = findDirection();
         if (result != null) {
-            if(isStoneOrBombAtop() & bullets > 0){
+            if(isStoneOrBombOrEnemyAtop() & bullets > 0){
                 if(isBulletAtop()){
                     return result.toString();
                 }
@@ -64,8 +68,8 @@ public class YourSolver implements Solver<Board> {
     }
 
     private boolean isBulletAtop() {
-        int y = board.getMe().getY();
-        int x = board.getMe().getX();
+        int y = getMe().getY();
+        int x = getMe().getX();
 
         for (int i = y - 1; i >= 0; i--) {
             if(board.isBulletAt(x,i)){
@@ -75,106 +79,188 @@ public class YourSolver implements Solver<Board> {
         return false;
     }
 
-    private boolean isStoneOrBombAtop() {
-        int y = board.getMe().getY();
-        int x = board.getMe().getX();
+    private boolean isStoneOrBombOrEnemyAtop() {
+        int y = getMe().getY();
+        int x = getMe().getX();
 
         for (int i = y - 1; i >= 0; i--) {
-            if(isStoneAt(x, i) || isBombAt(x, i)){
+            if(isStoneAt(x, i) || isBombAt(x, i) || isEnemyAt(x, i)){
+                if(isEnemyAt(x, i)){
+                    System.out.println("Enemy");
+                }
                 return true;
             }
         }
         return false;
     }
 
-    private Direction findDirection() {
-        Direction result = Direction.STOP;
+    private boolean isEnemyAt(int x, int y) {
+        return board.isAt(x, y, Elements.OTHER_HERO);
+    }
 
-        if (board.getMe() != null) {
-            result = findDirectionToBulletPack();
+    private Direction findDirection() {
+        Direction result = Direction.DOWN; //todo возможно вниз вместо стоп будет получше?
+
+        if (getMe() != null) {
+            if(bullets < 4){
+                result = findDirectionToBulletPack();
+            }else{
+                result = findDirectionToEnemy();
+            }
         }else {
-            System.out.println("Me not found!");
+            System.err.println("Me not found!");
         }
         return CheckResult(result);
     }
 
-    private Direction findDirectionToBulletPack() {
-        Direction directionToBulletPack = Direction.STOP;
-        Point me = board.getMe();
-        Point box = getBulletPack();
+    private Direction findDirectionToEnemy() {
+        Point enemy = getEnemy();
+        Point me = getMe();
+        Direction direction = Direction.DOWN;
+        PointImpl underEnemy = new PointImpl(enemy.getX(), enemy.getY() + 1);
+        direction = getDirection(underEnemy, me, direction, false);
+        return direction;
+    }
 
-        if (isAtLeastOneBulletPack(box)) {
+    private Direction getDirection(Point enemy, Point me, Direction direction, boolean toRecharge) {
+        if(enemy != null){
             Point newMe;
             int x = me.getX();
             int y = me.getY();
             double newDistance = (double) Integer.MAX_VALUE;
-			double distance;
+            double distance;
 
             newMe = new PointImpl(x + 1, y);
-			distance = newMe.distance(box);
-			if (distance < newDistance) {
-				newDistance = distance;
-				directionToBulletPack = Direction.RIGHT;
-			}
+            distance = newMe.distance(enemy);
+            if (distance < newDistance) {
+                newDistance = distance;
+                direction = Direction.RIGHT;
+            }
 
-			newMe = new PointImpl(x, y + 1);
-			distance = newMe.distance(box);
-			if (distance < newDistance) {
-				newDistance = distance;
-				directionToBulletPack = Direction.DOWN;
-			}
+            newMe = new PointImpl(x, y + 1);
+            distance = newMe.distance(enemy);
+            if (distance < newDistance) {
+                newDistance = distance;
+                direction = Direction.DOWN;
+            }
 
-			newMe = new PointImpl(x - 1, y);
-			distance = newMe.distance(box);
-			if (distance < newDistance) {
-				newDistance = distance;
-				directionToBulletPack = Direction.LEFT;
-			}
+            newMe = new PointImpl(x - 1, y);
+            distance = newMe.distance(enemy);
+            if (distance < newDistance) {
+                newDistance = distance;
+                direction = Direction.LEFT;
+            }
 
-			newMe = new PointImpl(x, y - 1);
-			distance = newMe.distance(box);
-			if (distance < newDistance) {
-				newDistance = distance;
-				directionToBulletPack = Direction.UP;
-			}
+            newMe = new PointImpl(x, y - 1);
+            distance = newMe.distance(enemy);
+            if (distance < newDistance) {
+                newDistance = distance;
+                direction = Direction.UP;
+            }
 
-			rechargeBulletsWhenNeed(newDistance);
+//            if(!toRecharge){
+//                if(getEnemy().getX() + 1 == getMe().getX() ||
+//                        getEnemy().getX() - 1 == getMe().getX()){
+//                    newDistance = 0.9;
+//                    direction = Direction.DOWN;
+//                }
+//            }
+
+            if(toRecharge){
+                rechargeBulletsWhenNeed(newDistance);
+            }
         }
-        return directionToBulletPack;
+        return direction;
+    }
+
+    private Point getEnemy() {
+        int i = 0;
+        Point enemy;  //todo найти ближайшего
+//        do {
+//            enemy = board.get(Elements.OTHER_HERO).get(i);
+//            i++;
+//        }while(enemy.getY() == (board.size() - 1) || i < board.get(Elements.OTHER_HERO).size() -1);
+        if(board.get(Elements.OTHER_HERO).get(0).getY() == board.size() - 1){
+            enemy = board.get(Elements.OTHER_HERO).get(1);
+        }else {
+            enemy = board.get(Elements.OTHER_HERO).get(0);
+        }
+
+        return enemy;
+    }
+
+    private Direction findDirectionToBulletPack() {
+        Point box = getBulletPack();
+        Point me = getMe();
+        Direction direction = Direction.DOWN;
+
+        direction = getDirection(box, me, direction, true);
+        return direction;
+    }
+
+    private Point getMe() {
+        try{
+
+            if(board.getMe() == null){
+                Point me = new PointImpl(1, 1);
+                return me;
+            }
+            meAt = board.getMe();
+            return meAt;
+        }catch (Exception e){
+            System.err.print("board.getMe() - вызвал исключение");
+        }
+        return meAt;
     }
 
     private Point getBulletPack() {
         //todo найти ближайший, а не первый по списку (но можно рэндомом)
         //или вообще какую стратегию.. типа, где меньше игроков,
         // или самая низкая по у
-        return board.get(Elements.BULLET_PACK).get(0);
+        try{
+            if(isAtLeastOneBulletPack()){
+                Point b = board.get(Elements.BULLET_PACK).get(0);
+                if (b != null){
+                    return b;
+                }
+            }
+            return bulletPack;
+        }catch (Exception e){
+            System.err.print("board.get(Elements.BULLET_PACK).get(0) - вызвал исключение");
+        }
+        return bulletPack;
     }
 
-    private boolean isAtLeastOneBulletPack(Point box) {
+    private boolean isAtLeastOneBulletPack() {
         List<Point> boxes = board.get(Elements.BULLET_PACK);
-        return boxes.size() != 0 && box != null;
+        return (boxes.size() != 0);
     }
 
     private void rechargeBulletsWhenNeed(double newDistance) {
         if(newDistance < 1){
-            bullets = 10;
+            bullets = bulletsToCharge;
         }
     }
 
     private Direction CheckResult(Direction result) {
         Direction checkedResultStone;
         Direction checkedResultBomb;
-        Direction checkedDirection = Direction.STOP;
+        Direction checkedHighPosition;
+        Direction checkedDirection = Direction.DOWN;
 
-        Point me = board.getMe();
+        Point me = getMe();
         if (me != null) {
 
             checkedResultStone = findBestDirectionNearStone(result);
             checkedResultBomb = findBestDirectionNearBomb(result);
-//            checkedHighPosition
+            checkedHighPosition = findHighPosition(result);
 
             if(checkedResultBomb.equals(result)){
-                checkedDirection = checkedResultStone;
+                if (checkedResultStone.equals(checkedResultBomb)){
+                    checkedDirection = checkedHighPosition;
+                }else {
+                    checkedDirection = checkedResultStone;
+                }
             }else {
                 checkedDirection = checkedResultBomb;
             }
@@ -182,22 +268,32 @@ public class YourSolver implements Solver<Board> {
         return checkedDirection;
     }
 
+    private Direction findHighPosition(Direction result) {
+//        if(getMe().getY() <  4){
+////            System.out.println("bullets " + bullets + " y "+ getMe().getY() + " size " + (board.size() - 4));
+//            return Direction.DOWN;
+//        }
+
+        return result;
+    }
+
     private Direction findBestDirectionNearBomb(Direction givenDirection) {
         Direction bestDirection = givenDirection;
-        int x = board.getMe().getX();
-        int y = board.getMe().getY();
+        int x = getMe().getX();
+        int y = getMe().getY();
 
         // + проход навстречу
 		if ((isBombAt(x, y - 4) || isBombAt(x, y - 3)) & (isMovingUp(bestDirection))) {
-			if (checkNewDistanceRight(x, y) > checkNewDistanceLeft(x, y)) {
+            if (bullets > 1) {return Direction.ACT;}
+            if (checkNewDistanceRight(x, y) > checkNewDistanceLeft(x, y)) {
 				return Direction.LEFT;
 			}
 			return Direction.RIGHT;
 		}
 
-        // + если мина вверху в вдух ячейках - уходим вниз
+        // + если мина вверху в двух ячейках - уходим вниз
         if (isBombAt(x, y - 2)){
-            return Direction.DOWN;
+            return Direction.ACT.DOWN;
         }
 
         // + если мина вверху справа в соседней колонке и движимся вправо или вверх,
@@ -281,8 +377,8 @@ public class YourSolver implements Solver<Board> {
 
     private Direction findBestDirectionNearStone(Direction givenDirection) {
         Direction bestDirection = givenDirection;
-        int x = board.getMe().getX();
-        int y = board.getMe().getY();
+        int x = getMe().getX();
+        int y = getMe().getY();
 
         if (isStoneAt(x - 1, y - 1) & isMovingLeft(bestDirection)){
             return Direction.STOP;
@@ -293,7 +389,11 @@ public class YourSolver implements Solver<Board> {
         }
 
         if ((isStoneAt(x, y - 1) || isStoneAt(x, y - 2)) & isMovingUp(bestDirection)){
-            return Direction.LEFT;  //todo check why always left, not right
+            if (bullets > 1) {return Direction.ACT;}
+            if (checkNewDistanceRight(x, y) > checkNewDistanceLeft(x, y)) {
+                return Direction.LEFT;
+            }
+            return Direction.RIGHT;  //todo check why always left, not right
         }
         return bestDirection;
     }
