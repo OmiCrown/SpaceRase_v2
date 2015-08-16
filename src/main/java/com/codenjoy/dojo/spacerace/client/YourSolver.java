@@ -88,7 +88,7 @@ public class YourSolver implements Solver<Board> {
         int x = getMe().getX();
 
         for (int i = y - 1; i >= 0; i--) {
-            if(isStoneAt(x, i) || isBombAt(x, i) || isEnemyAt(x, i)){
+            if(isEnemyAt(x, i) || isStoneAt(x, i) || isBombAt(x, i)){
                 if(isEnemyAt(x, i)){
                     System.out.println("Enemy");
                 }
@@ -110,7 +110,7 @@ public class YourSolver implements Solver<Board> {
                 result = findDirectionToBulletPack();
             }else{
                 if(position.equals(getMe())){
-                    result = Direction.random();
+                    result = Direction.random().clockwise();
                 }else {
                     result = findDirectionToEnemy();
                 }
@@ -253,19 +253,21 @@ public class YourSolver implements Solver<Board> {
     private Direction CheckResult(Direction result) {
         Direction checkedResultStone;
         Direction checkedResultBomb;
-        Direction checkedHighPosition;
         Direction checkedDirection = last;
+        Direction checkedBullets;
 
         Point me = getMe();
         if (me != null) {
 
             checkedResultStone = findBestDirectionNearStone(result);
             checkedResultBomb = findBestDirectionNearBomb(result);
-            checkedHighPosition = findHighPosition(result);
+            checkedBullets = checkedBullets(result);
 
             if(checkedResultBomb.equals(result)){
                 if (checkedResultStone.equals(checkedResultBomb)){
-                    checkedDirection = checkedHighPosition;
+                    if(checkedBullets.equals(result)){
+                        checkedDirection = checkedBullets;
+                    }
                 }else {
                     checkedDirection = checkedResultStone;
                 }
@@ -276,13 +278,16 @@ public class YourSolver implements Solver<Board> {
         return checkedDirection;
     }
 
-    private Direction findHighPosition(Direction result) {
-//        if(getMe().getY() <  4){
-////            System.out.println("bullets " + bullets + " y "+ getMe().getY() + " size " + (board.size() - 4));
-//            return Direction.DOWN;
-//        }
-
-        return result;
+    private Direction checkedBullets(Direction result) {
+        // моя опозиция + дирекшн + на одну вниз = пуля
+        // то проверка стоп
+        Point me = getMe();
+        if ((result.equals(Direction.LEFT) & board.isBulletAt(me.getX() - 1, me.getY() - 1)) ||
+        (result.equals(Direction.RIGHT) & board.isBulletAt(me.getX() + 1, me.getY() - 1))){
+            return CheckResult(Direction.STOP);
+        }else {
+            return result;
+        }
     }
 
     private Direction findBestDirectionNearBomb(Direction givenDirection) {
