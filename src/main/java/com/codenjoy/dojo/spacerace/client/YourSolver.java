@@ -27,6 +27,8 @@ public class YourSolver implements Solver<Board> {
     Point bulletPack;
     private Point meAt;
     private int bulletsToCharge = 10;
+    private  Point position;
+    private Direction last;
 
     public YourSolver(Dice dice) {
         this.dice = dice;
@@ -54,6 +56,7 @@ public class YourSolver implements Solver<Board> {
             return "";
         Direction result;
         result = findDirection();
+        position = getMe();
         if (result != null) {
             if(isStoneOrBombOrEnemyAtop() & bullets > 0){
                 if(isBulletAtop()){
@@ -62,9 +65,10 @@ public class YourSolver implements Solver<Board> {
                 bullets--;
                 return result + Direction.ACT.toString();
             }
-            return result.toString();
+            last = result;
+            return last.toString();
         }
-        return Direction.STOP.toString();
+        return last.toString();
     }
 
     private boolean isBulletAtop() {
@@ -99,13 +103,17 @@ public class YourSolver implements Solver<Board> {
     }
 
     private Direction findDirection() {
-        Direction result = Direction.DOWN; //todo возможно вниз вместо стоп будет получше?
+        Direction result = last; //todo возможно вниз вместо стоп будет получше?
 
         if (getMe() != null) {
             if(bullets < 4){
                 result = findDirectionToBulletPack();
             }else{
-                result = findDirectionToEnemy();
+                if(position.equals(getMe())){
+                    result = Direction.random();
+                }else {
+                    result = findDirectionToEnemy();
+                }
             }
         }else {
             System.err.println("Me not found!");
@@ -116,7 +124,7 @@ public class YourSolver implements Solver<Board> {
     private Direction findDirectionToEnemy() {
         Point enemy = getEnemy();
         Point me = getMe();
-        Direction direction = Direction.DOWN;
+        Direction direction = last;
         PointImpl underEnemy = new PointImpl(enemy.getX(), enemy.getY() + 1);
         direction = getDirection(underEnemy, me, direction, false);
         return direction;
@@ -192,7 +200,7 @@ public class YourSolver implements Solver<Board> {
     private Direction findDirectionToBulletPack() {
         Point box = getBulletPack();
         Point me = getMe();
-        Direction direction = Direction.DOWN;
+        Direction direction = last;
 
         direction = getDirection(box, me, direction, true);
         return direction;
@@ -246,7 +254,7 @@ public class YourSolver implements Solver<Board> {
         Direction checkedResultStone;
         Direction checkedResultBomb;
         Direction checkedHighPosition;
-        Direction checkedDirection = Direction.DOWN;
+        Direction checkedDirection = last;
 
         Point me = getMe();
         if (me != null) {
@@ -304,9 +312,9 @@ public class YourSolver implements Solver<Board> {
         }
 
         // если мина вверху справа в колонке через одну и движимся вправо, то ждем
-        if ((isBombAt(x + 2, y - 2)) & // TODO implement directions
+        if ((isBombAt(x + 2, y - 2)) & // TODO test
                 (isMovingRight(bestDirection))){
-            return Direction.STOP;
+            return CheckResult(Direction.UP);
         }
 
         // еще ждем

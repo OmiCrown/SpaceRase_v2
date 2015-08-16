@@ -264,7 +264,7 @@ public class SolverTest {
     }
 
     @Test
-    public void shouldDownWhenNotFoundBulletPack() {
+    public void shouldLastWhenNotFoundBulletPack() {
         assertA("☼     ☼" +
                 "☼7    ☼" +
                 "☼     ☼" +
@@ -281,11 +281,11 @@ public class SolverTest {
                 "☼     ☼" +
                 "☼☺    ☼" +
                 "☼     ☼"
-                , Direction.DOWN);
+                , Direction.UP);
     }
 
     @Test
-    public void shouldReturn11WhenNotFoundMe() {
+    public void shouldLastWhenNotFoundMe() {
         assertA("☼     ☼" +
                 "☼7    ☼" +
                 "☼     ☼" +
@@ -302,7 +302,7 @@ public class SolverTest {
                 "☼     ☼" +
                 "☼     ☼" +
                 "☼     ☼"
-                , Direction.DOWN);
+                , Direction.UP);
     }
 
 
