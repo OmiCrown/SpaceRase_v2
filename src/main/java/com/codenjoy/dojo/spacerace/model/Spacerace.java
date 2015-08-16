@@ -78,7 +78,8 @@ public class Spacerace implements Tickable, Field {
     }
 
     private void tickBombs() {
-       removeBombDestroyedByBullet();
+
+        removeBombDestroyedByBullet();
         for (Bomb bomb : bombs) {
             bomb.tick();
         }
@@ -170,6 +171,7 @@ public class Spacerace implements Tickable, Field {
         for (Player player : players) {
             Hero hero = player.getHero();
             hero.tick();
+            heroKilledByStone();
             if(bulletPacks.contains((Point) hero)){ // todo проверить приведение
                 bulletPacks.remove((Point) hero);
                 currentBulletPacks--;

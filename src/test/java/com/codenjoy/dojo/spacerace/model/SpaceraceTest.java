@@ -65,8 +65,6 @@ public class SpaceraceTest {
         }
     }
 
-
-
     private void givenFl(String board) {
         LevelImpl level = new LevelImpl(board);
         Hero hero = level.getHero(charger).get(0);
@@ -980,6 +978,53 @@ public class SpaceraceTest {
                 "☼    ☼" +
                 "☼  + ☼" +
                 "☼    ☼");
+    }
+
+    @Test
+    public void shouldStoneDestroyHero2() {
+        // given
+        givenFl("☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+
+        diceNew(2);
+        game.tick();
+        game.tick();
+        game.tick();
+        game.tick();
+
+        // then
+        assertE("☼    ☼" +
+                "☼  0 ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼");
+
+        hero.up();
+        game.tick();
+
+        // then
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼  0 ☼" +
+                "☼  ☺ ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+        hero.up();
+        game.tick();
+
+        // then
+        assertE("☼    ☼" +
+                "☼    ☼" +
+                "☼  + ☼" +
+                "☼    ☼" +
+                "☼    ☼" +
+                "☼    ☼");
+
     }
 
     @Test
