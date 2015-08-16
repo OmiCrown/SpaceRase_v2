@@ -57,11 +57,11 @@ public class Hero extends PointImpl implements Joystick, Tickable, State<Element
 
     @Override
     public void act(int... p) {
+        if (!alive) return;
+
         if (p.length == 1 && p[0] == 0) {
             die();
         }
-
-        if (!alive) return;
 
         fire = true;
     }
