@@ -106,7 +106,7 @@ public class YourSolver implements Solver<Board> {
         Direction result = last; //todo возможно вниз вместо стоп будет получше?
 
         if (getMe() != null) {
-            if(bullets < 4){
+            if(bullets < 2){
                 result = findDirectionToBulletPack();
             }else{
                 if(position.equals(getMe())){
