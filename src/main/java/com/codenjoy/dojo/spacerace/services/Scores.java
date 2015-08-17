@@ -20,7 +20,7 @@ public class Scores implements PlayerScores {
     public Scores(int startScore, Settings settings) {
         this.score = startScore;
 
-        // вот тут мы на админке увидим два поля с подписями и возожностью редактировать значение по умолчанию
+        // вот тут мы на админке увидим поля с подписями и возожностью редактировать значение по умолчанию
         destroyBombScore = settings.addEditBox("Destroy bomb score").type(Integer.class).def(30);
         destroyStoneScore = settings.addEditBox("Destroy stone score").type(Integer.class).def(10);
         destroyEnemyScore = settings.addEditBox("Destroy enemy score").type(Integer.class).def(500);

@@ -6,7 +6,6 @@ import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.PrinterFactory;
 import com.codenjoy.dojo.services.PrinterFactoryImpl;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -47,7 +46,6 @@ public class SingleTest {
 
         dice = mock(Dice.class);
         Spacerace spacerace = new Spacerace(level, dice,
-                SpaceraceTest.ONE_BULLET_CHARGER.getTicksToRecharge(),
                 SpaceraceTest.ONE_BULLET_CHARGER.getBulletsCount());
         PrinterFactory factory = new PrinterFactoryImpl();
 
