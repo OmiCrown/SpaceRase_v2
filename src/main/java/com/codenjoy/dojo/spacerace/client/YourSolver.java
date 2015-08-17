@@ -1,7 +1,5 @@
 package com.codenjoy.dojo.spacerace.client;
 
-import java.util.List;
-
 import com.codenjoy.dojo.client.Direction;
 import com.codenjoy.dojo.client.Solver;
 import com.codenjoy.dojo.client.WebSocketRunner;
@@ -10,6 +8,8 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.spacerace.model.Elements;
+
+import java.util.List;
 
 /**
  * User: your name
@@ -59,7 +59,7 @@ public class YourSolver implements Solver<Board> {
         position = getMe();
         if (result != null) {
             if(isStoneOrBombOrEnemyAtop() & bullets > 0){
-                if(isBulletAtop()){
+                if(isBulletOrExplosionAtop()){
                     return result.toString();
                 }
                 bullets--;
@@ -71,12 +71,12 @@ public class YourSolver implements Solver<Board> {
         return last.toString();
     }
 
-    private boolean isBulletAtop() {
+    private boolean isBulletOrExplosionAtop() {
         int y = getMe().getY();
         int x = getMe().getX();
 
         for (int i = y - 1; i >= 0; i--) {
-            if(board.isBulletAt(x,i)){
+            if(board.isBulletAt(x,i) || board.isAt(x, i, Elements.EXPLOSION)){ // todo if MY bullet
                 return true;
             }
         }
@@ -166,14 +166,6 @@ public class YourSolver implements Solver<Board> {
                 direction = Direction.UP;
             }
 
-//            if(!toRecharge){
-//                if(getEnemy().getX() + 1 == getMe().getX() ||
-//                        getEnemy().getX() - 1 == getMe().getX()){
-//                    newDistance = 0.9;
-//                    direction = Direction.DOWN;
-//                }
-//            }
-
             if(toRecharge){
                 rechargeBulletsWhenNeed(newDistance);
             }
@@ -232,7 +224,6 @@ public class YourSolver implements Solver<Board> {
                     return b;
                 }
             }
-            return bulletPack;
         }catch (Exception e){
             System.err.print("board.get(Elements.BULLET_PACK).get(0) - вызвал исключение");
         }
