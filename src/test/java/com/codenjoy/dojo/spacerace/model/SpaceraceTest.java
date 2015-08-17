@@ -11,10 +11,8 @@ import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -24,7 +22,7 @@ import static org.mockito.Mockito.when;
  */
 public class SpaceraceTest {
 
-    public final static BulletCharger ONE_BULLET_CHARGER = new BulletCharger(100, 1);
+    public final static BulletCharger ONE_BULLET_CHARGER = new BulletCharger(1);
     private Spacerace game;
     private BulletCharger charger = ONE_BULLET_CHARGER;
     private Hero hero;
@@ -70,7 +68,6 @@ public class SpaceraceTest {
         Hero hero = level.getHero(charger).get(0);
 
         game = new Spacerace(level, dice,
-                charger.getTicksToRecharge(),
                 charger.getBulletsCount());
         listener = mock(EventListener.class);
         player = new Player(listener);
@@ -86,9 +83,8 @@ public class SpaceraceTest {
     }
 
     private void newBulletPackForHeroWithGivenBullets(int i) {
-        int ticksToRecharge = 1000;
         int bulletsCount = i;
-        charger = new BulletCharger(ticksToRecharge, bulletsCount);
+        charger = new BulletCharger(bulletsCount);
     }
 
     @Test

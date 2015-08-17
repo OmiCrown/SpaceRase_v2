@@ -3,13 +3,11 @@ package com.codenjoy.dojo.spacerace.model;
 import com.codenjoy.dojo.services.Tickable;
 
 public class BulletCharger implements Tickable {
-	private final int ticksToRecharge;
 	private final int bulletsCount;
 	private int bullets = 0;
 	private boolean toRecharge = false;
 
-	public BulletCharger(int ticksToRecharge, int bulletsCount) {
-		this.ticksToRecharge = ticksToRecharge;
+	public BulletCharger( int bulletsCount) {
 		this.bulletsCount = bulletsCount;
 	}
 
@@ -23,6 +21,7 @@ public class BulletCharger implements Tickable {
 			recharge();
 			toRecharge = false;
 		}
+
 	}
 
 	private void recharge() {
@@ -35,10 +34,6 @@ public class BulletCharger implements Tickable {
 			bullets--;
 		}
 		return result;
-	}
-
-	public int getTicksToRecharge() {
-		return ticksToRecharge;
 	}
 
 	public int getBulletsCount() {
