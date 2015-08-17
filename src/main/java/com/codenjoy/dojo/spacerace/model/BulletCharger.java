@@ -5,7 +5,6 @@ import com.codenjoy.dojo.services.Tickable;
 public class BulletCharger implements Tickable {
 	private final int ticksToRecharge;
 	private final int bulletsCount;
-	private int timer = 0;
 	private int bullets = 0;
 	private boolean toRecharge = false;
 
@@ -24,15 +23,9 @@ public class BulletCharger implements Tickable {
 			recharge();
 			toRecharge = false;
 		}
-		// if (timer == 0) { // TODO доделать, если нам понадобится перезарядка
-		// по времени
-		// recharge();
-		// }
-		// timer--;
 	}
 
 	private void recharge() {
-		timer = ticksToRecharge;
 		bullets = bulletsCount;
 	}
 
