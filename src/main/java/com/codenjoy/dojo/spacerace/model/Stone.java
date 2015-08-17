@@ -30,6 +30,5 @@ public class Stone extends PointImpl implements State<Elements, Player>, Tickabl
             int newY = direction.changeY(y);
             move(newX, newY);
         }
-
     }
 }

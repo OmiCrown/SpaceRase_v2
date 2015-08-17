@@ -1,11 +1,7 @@
 package com.codenjoy.dojo.spacerace.model;
 
-import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 
-/**
- * Created by indigo on 08.08.2015.
- */
 public class BombWave extends PointImpl {
     private Bomb bomb;
 
