@@ -24,9 +24,7 @@ public class Spacerace implements Tickable, Field {
     private List<Stone> stones;
     private List<Player> players;
     private Dice dice;
-    private boolean isNewStone = true;
     private int countStone = 0;
-    private boolean isNewBomb = true;
     private int countBomb = 0;
     private int ticksToRecharge;
     private int bulletsCount;
@@ -397,7 +395,6 @@ public class Spacerace implements Tickable, Field {
 
     public void addStone(int x) {
         stones.add(new Stone(x, size));
-        isNewStone = false;
     }
 
     public List<Stone> getStones() {
@@ -406,6 +403,5 @@ public class Spacerace implements Tickable, Field {
 
     public void addBomb(int x) {
         bombs.add(new Bomb(x, size));
-        isNewBomb = false;
     }
 }
