@@ -34,11 +34,11 @@ public class Spacerace implements Tickable, Field {
         this.bulletsCount = bulletsCount;
         walls = level.getWalls();
         size = level.getSize();
-        players = new LinkedList<Player>();
-        bulletPacks = new LinkedList<BulletPack>();
-        bombs = new LinkedList<Bomb>();
-        bullets = new LinkedList<Bullet>();
-        stones = new LinkedList<Stone>();
+        players = new LinkedList<>();
+        bulletPacks = new LinkedList<>();
+        bombs = new LinkedList<>();
+        bullets = new LinkedList<>();
+        stones = new LinkedList<>();
         explosions = new LinkedList<>();
     }
 
@@ -168,8 +168,8 @@ public class Spacerace implements Tickable, Field {
             Hero hero = player.getHero();
             hero.tick();
             heroKilledByStone();
-            if(bulletPacks.contains((Point) hero)){ // todo проверить приведение
-                bulletPacks.remove((Point) hero);
+            if(bulletPacks.contains(hero)){ // todo проверить приведение
+                bulletPacks.remove(hero);
                 currentBulletPacks--;
                 createBulletPack();
                 player.event(Events.RECHARGE);
