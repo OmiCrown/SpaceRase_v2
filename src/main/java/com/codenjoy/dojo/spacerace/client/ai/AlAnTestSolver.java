@@ -1,7 +1,5 @@
 package com.codenjoy.dojo.spacerace.client.ai;
 
-import java.util.List;
-
 import com.codenjoy.dojo.client.Direction;
 import com.codenjoy.dojo.client.LocalGameRunner;
 import com.codenjoy.dojo.client.Solver;
@@ -14,10 +12,10 @@ import com.codenjoy.dojo.spacerace.client.Board;
 import com.codenjoy.dojo.spacerace.model.Elements;
 import com.codenjoy.dojo.spacerace.services.GameRunner;
 
+import java.util.List;
+
 public class AlAnTestSolver implements Solver<Board> {
 
-	private int delay = 0;
-	private boolean vpravo = true;
 	private Board board;
     private int bullets = 0;
 
@@ -89,8 +87,6 @@ public class AlAnTestSolver implements Solver<Board> {
 
 		Point me = board.getMe();
 		if (me != null) {
-			int x = me.getX();
-			int y = me.getY();
 			result = findDirectionToBulletPack(board, me, result);
 		}
 		return CheckResult(result, board);
@@ -153,7 +149,6 @@ public class AlAnTestSolver implements Solver<Board> {
             checkedResultBomb = findBestDirectionNearBomb(board, me, result);
             //todo check condition:
             checkedResultBomb = findBestDirectionNearBomb(board, me, checkedResultBomb);
-            checkedResultHighPosition(board, me, result);
 
             if(checkedResultBomb.equals(result)){
                 checkedDirection = checkedResultStone;
@@ -163,11 +158,6 @@ public class AlAnTestSolver implements Solver<Board> {
 		}
 		return checkedDirection;
 	}
-
-    private Direction checkedResultHighPosition(Board board, Point me, Direction result) {
-        //todo implement !!!!
-        return result;
-    }
 
     private Direction findBestDirectionNearBomb(Board board, Point me, Direction givenDirection) {
         Direction bestDirection = givenDirection;

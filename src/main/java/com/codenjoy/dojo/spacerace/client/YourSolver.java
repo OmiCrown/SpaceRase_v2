@@ -77,8 +77,6 @@ public class YourSolver implements Solver<Board> {
 
         Point me = board.getMe();
         if (me != null) {
-            int x = me.getX();
-            int y = me.getY();
             result = findDirectionToBulletPack(board, me, result);
         }
         return CheckResult(result, board);
