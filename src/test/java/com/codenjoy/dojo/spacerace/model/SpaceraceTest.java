@@ -1165,7 +1165,7 @@ public class SpaceraceTest {
     }
 
     @Test
-    public void shouldHeroShootAfterRecharge() {
+    public void shouldHeroShootAfterRecharge() { // todo make it independent from starting conditions
         //Given
         givenFl("☼   ☼" +
                 "☼ ☺ ☼" +
